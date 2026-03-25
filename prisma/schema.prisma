@@ -1,0 +1,183 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+}
+
+model Profile {
+  id          String       @id @default(cuid())
+  name        String
+  title       String
+  bio         String
+  aboutTitle  String?
+  address     String?
+  avatarUrl   String?
+  resumeUrl   String?
+  email       String?
+  educationTitle       String?      @default("Academic Background")
+  educationSubtitle    String?      @default("Education")
+  experienceTitle      String?      @default("Professional Experience")
+  experienceSubtitle   String?      @default("Career Path")
+  skillsTitle          String?      @default("Core Expertise")
+  skillsSubtitle       String?      @default("Technical Stack")
+  projectsTitle        String?      @default("Featured Projects")
+  projectsSubtitle     String?      @default("Portfolio")
+  certificatesTitle    String?      @default("Certifications")
+  certificatesSubtitle String?      @default("Recognition")
+  publicationsTitle    String?      @default("Research & Publications")
+  publicationsSubtitle String?      @default("Academic Work")
+  activitiesTitle      String?      @default("Extra-Curricular Activities")
+  activitiesSubtitle   String?      @default("Involvement")
+  referencesTitle      String?      @default("References")
+  referencesSubtitle   String?      @default("Endorsements")
+  blogTitle            String?     @default("Latest Writing")
+  blogSubtitle         String?     @default("Journal")
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+
+  socialLinks SocialLink[]
+}
+
+model SocialLink {
+  id        String   @id @default(cuid())
+  platform  String
+  url       String
+  order     Int      @default(0)
+  profileId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  imageUrl    String?
+  githubUrl   String?
+  liveUrl     String?
+  tags        String
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  name      String
+  category  String
+  icon      String?
+  level     Int      @default(0)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Certificate {
+  id            String    @id @default(cuid())
+  title         String
+  issuer        String
+  issuedAt      DateTime?
+  credentialId  String?
+  credentialUrl String?
+  imageUrl      String?
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Experience {
+  id          String    @id @default(cuid())
+  company     String
+  position    String
+  description String?
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean   @default(false)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Education {
+  id          String    @id @default(cuid())
+  school      String
+  degree      String
+  field       String?
+  passingYear Int
+  gradeType   String?
+  grade       String?
+  gradeScale  String?
+  startDate   DateTime?
+  endDate     DateTime?
+  current     Boolean   @default(false)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  content   String
+  published Boolean  @default(false)
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id])
+}
+
+model Activity {
+  id          String    @id @default(cuid())
+  title       String
+  role        String?
+  description String?
+  startDate   DateTime?
+  endDate     DateTime?
+  current     Boolean   @default(false)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Publication {
+  id          String    @id @default(cuid())
+  title       String
+  publisher   String?
+  date        DateTime?
+  url         String?
+  description String?
+  submitted   Boolean   @default(false)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Reference {
+  id          String   @id @default(cuid())
+  name        String
+  designation String
+  company     String?
+  email       String?
+  phone       String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

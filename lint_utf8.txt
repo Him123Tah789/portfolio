@@ -1,0 +1,1308 @@
+﻿
+> my-portfolio@0.1.0 lint
+> eslint
+
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\activities\page.tsx
+    5:44   warning  'Plus' is defined but never used          @typescript-eslint/no-unused-vars
+   25:50   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   30:52   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   48:38   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   72:29   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   82:21   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  116:21   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:90   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  301:102  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\certificates\page.tsx
+   24:85  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   41:40  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   44:52  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   57:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   85:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  107:21  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\education\page.tsx
+    5:49  warning  'Plus' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   23:48  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+   29:52  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+   49:38  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+   73:29  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+   83:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  106:21  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  228:18  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\education\page.tsx:228:18
+  226 |                 </div>
+  227 |
+> 228 |                 <GradeSection gt={gradeType} />
+      |                  ^^^^^^^^^^^^ This component is created during render
+  229 |
+  230 |                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(255,255,255,0.02)", padding: 20, borderRadius: 16, border: "1px solid var(--border)", marginTop: 8 }}>
+  231 |                     <label style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, fontWeight: 700, color: "var(--text-primary)", cursor: "pointer" }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\education\page.tsx:134:26
+  132 |     );
+  133 |
+> 134 |     const GradeSection = ({ gt, prefix = "" }: { gt: string; prefix?: string }) => (
+      |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         <>
+      | ^^^^^^^^^^
+> 136 |             {gt !== "None" && (
+      ÔÇª
+      | ^^^^^^^^^^
+> 160 |         </>
+      | ^^^^^^^^^^
+> 161 |     );
+      | ^^^^^^ The component is created during render here
+  162 |
+  163 |     return (
+  164 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>  react-hooks/static-components
+  358:30  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\education\page.tsx:358:30
+  356 |                             </div>
+  357 |
+> 358 |                             <GradeSection gt={editGradeType} prefix="edit_" />
+      |                              ^^^^^^^^^^^^ This component is created during render
+  359 |
+  360 |                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 32 }}>
+  361 |                                 <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 700, color: "var(--accent)", cursor: "pointer" }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\education\page.tsx:134:26
+  132 |     );
+  133 |
+> 134 |     const GradeSection = ({ gt, prefix = "" }: { gt: string; prefix?: string }) => (
+      |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         <>
+      | ^^^^^^^^^^
+> 136 |             {gt !== "None" && (
+      ÔÇª
+      | ^^^^^^^^^^
+> 160 |         </>
+      | ^^^^^^^^^^
+> 161 |     );
+      | ^^^^^^ The component is created during render here
+  162 |
+  163 |     return (
+  164 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                 react-hooks/static-components
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\experience\page.tsx
+    5:45   warning  'Plus' is defined but never used          @typescript-eslint/no-unused-vars
+   25:50   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   30:52   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   48:38   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   72:29   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   82:21   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  116:21   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  190:90   error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  303:102  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\page.tsx
+    1:55  warning  'Phone' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+  102:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  106:41  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  110:37  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  111:9   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                      @typescript-eslint/ban-ts-comment
+  115:43  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  116:9   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                      @typescript-eslint/ban-ts-comment
+  121:41  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  122:9   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                      @typescript-eslint/ban-ts-comment
+  126:43  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  127:9   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                      @typescript-eslint/ban-ts-comment
+  131:41  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  132:9   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                      @typescript-eslint/ban-ts-comment
+  180:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  278:57  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  278:69  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  284:68  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  288:64  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\posts\page.tsx
+    6:40  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+   23:21  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+   50:88  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  144:65  error  Error: Cannot call impure function during render
+
+`Date.now` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\posts\page.tsx:144:65
+  142 |                                 <h3 style={{ fontWeight: 600, fontSize: "1rem", color: "var(--text-primary)", marginBottom: 4 }}>{post.title || "Untitled Post"}</h3>
+  143 |                                 <p style={{ fontSize: 12, color: "var(--text-muted)" }}>
+> 144 |                                     {new Date(post.createdAt || Date.now()).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })} ÔÇó
+      |                                                                 ^^^^^^^^^^ Cannot call impure function
+  145 |                                     <span style={{ marginLeft: 8, color: post.published ? "var(--accent)" : "#ffb347", fontWeight: 700 }}>{post.published ? "PUBLISHED" : "DRAFT"}</span>
+  146 |                                 </p>
+  147 |                             </div>  react-hooks/purity
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\profile\page.tsx
+    7:67  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   33:50  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   37:52  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   44:64  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   64:44  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+   64:54  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  106:32  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  157:66  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               @typescript-eslint/no-explicit-any
+  217:41  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @next/next/no-img-element
+  259:36  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        react/no-unescaped-entities
+  274:26  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\profile\page.tsx:274:26
+  272 |                     </h2>
+  273 |                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+> 274 |                         <Field label="Full Name" name="name" />
+      |                          ^^^^^ This component is created during render
+  275 |                         <Field label="Professional Title" name="title" />
+  276 |                     </div>
+  277 |                     <div style={{ marginBottom: 24 }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\profile\page.tsx:157:19
+  155 |     };
+  156 |
+> 157 |     const Field = ({ label, name, type = "text", defaultValue }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 158 |         <div>
+      | ^^^^^^^^^^^^^
+> 159 |             <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</label>
+      | ^^^^^^^^^^^^^
+> 160 |             <input type={type} name={name} defaultValue={defaultValue ?? profile?.[name] ?? ""}
+      | ^^^^^^^^^^^^^
+> 161 |                 style={inputStyle}
+      | ^^^^^^^^^^^^^
+> 162 |                 onFocus={(e) => e.target.style.borderColor = "var(--accent)"}
+      | ^^^^^^^^^^^^^
+> 163 |                 onBlur={(e) => e.target.style.borderColor = "var(--border)"}
+      | ^^^^^^^^^^^^^
+> 164 |             />
+      | ^^^^^^^^^^^^^
+> 165 |         </div>
+      | ^^^^^^^^^^^^^
+> 166 |     );
+      | ^^^^^^ The component is created during render here
+  167 |
+  168 |     return (
+  169 |         <div style={{ maxWidth: 860 }}>                                                                                                                                                                                        react-hooks/static-components
+  275:26  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\profile\page.tsx:275:26
+  273 |                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+  274 |                         <Field label="Full Name" name="name" />
+> 275 |                         <Field label="Professional Title" name="title" />
+      |                          ^^^^^ This component is created during render
+  276 |                     </div>
+  277 |                     <div style={{ marginBottom: 24 }}>
+  278 |                         <Field label="About Section Title" name="aboutTitle" defaultValue={profile?.aboutTitle ?? "Passionate about building things that matter"} />
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\profile\page.tsx:157:19
+  155 |     };
+  156 |
+> 157 |     const Field = ({ label, name, type = "text", defaultValue }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 158 |         <div>
+      | ^^^^^^^^^^^^^
+> 159 |             <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</label>
+      | ^^^^^^^^^^^^^
+> 160 |             <input type={type} name={name} defaultValue={defaultValue ?? profile?.[name] ?? ""}
+      | ^^^^^^^^^^^^^
+> 161 |                 style={inputStyle}
+      | ^^^^^^^^^^^^^
+> 162 |                 onFocus={(e) => e.target.style.borderColor = "var(--accent)"}
+      | ^^^^^^^^^^^^^
+> 163 |                 onBlur={(e) => e.target.style.borderColor = "var(--border)"}
+      | ^^^^^^^^^^^^^
+> 164 |             />
+      | ^^^^^^^^^^^^^
+> 165 |         </div>
+      | ^^^^^^^^^^^^^
+> 166 |     );
+      | ^^^^^^ The component is created during render here
+  167 |
+  168 |     return (
+  169 |         <div style={{ maxWidth: 860 }}>                                             react-hooks/static-components
+  278:26  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\profile\page.tsx:278:26
+  276 |                     </div>
+  277 |                     <div style={{ marginBottom: 24 }}>
+> 278 |                         <Field label="About Section Title" name="aboutTitle" defaultValue={profile?.aboutTitle ?? "Passionate about building things that matter"} />
+      |                          ^^^^^ This component is created during render
+  279 |                     </div>
+  280 |                     <div style={{ marginBottom: 24 }}>
+  281 |                         <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>Bio / About Me</label>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\profile\page.tsx:157:19
+  155 |     };
+  156 |
+> 157 |     const Field = ({ label, name, type = "text", defaultValue }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 158 |         <div>
+      | ^^^^^^^^^^^^^
+> 159 |             <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</label>
+      | ^^^^^^^^^^^^^
+> 160 |             <input type={type} name={name} defaultValue={defaultValue ?? profile?.[name] ?? ""}
+      | ^^^^^^^^^^^^^
+> 161 |                 style={inputStyle}
+      | ^^^^^^^^^^^^^
+> 162 |                 onFocus={(e) => e.target.style.borderColor = "var(--accent)"}
+      | ^^^^^^^^^^^^^
+> 163 |                 onBlur={(e) => e.target.style.borderColor = "var(--border)"}
+      | ^^^^^^^^^^^^^
+> 164 |             />
+      | ^^^^^^^^^^^^^
+> 165 |         </div>
+      | ^^^^^^^^^^^^^
+> 166 |     );
+      | ^^^^^^ The component is created during render here
+  167 |
+  168 |     return (
+  169 |         <div style={{ maxWidth: 860 }}>  react-hooks/static-components
+  289:26  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\profile\page.tsx:289:26
+  287 |                     </div>
+  288 |                     <div style={{ marginBottom: 24 }}>
+> 289 |                         <Field label="Present Address" name="address" defaultValue={profile?.address ?? ""} />
+      |                          ^^^^^ This component is created during render
+  290 |                     </div>
+  291 |                     <Field label="Primary Email Address" name="email" type="email" />
+  292 |                 </div>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\profile\page.tsx:157:19
+  155 |     };
+  156 |
+> 157 |     const Field = ({ label, name, type = "text", defaultValue }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 158 |         <div>
+      | ^^^^^^^^^^^^^
+> 159 |             <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</label>
+      | ^^^^^^^^^^^^^
+> 160 |             <input type={type} name={name} defaultValue={defaultValue ?? profile?.[name] ?? ""}
+      | ^^^^^^^^^^^^^
+> 161 |                 style={inputStyle}
+      | ^^^^^^^^^^^^^
+> 162 |                 onFocus={(e) => e.target.style.borderColor = "var(--accent)"}
+      | ^^^^^^^^^^^^^
+> 163 |                 onBlur={(e) => e.target.style.borderColor = "var(--border)"}
+      | ^^^^^^^^^^^^^
+> 164 |             />
+      | ^^^^^^^^^^^^^
+> 165 |         </div>
+      | ^^^^^^^^^^^^^
+> 166 |     );
+      | ^^^^^^ The component is created during render here
+  167 |
+  168 |     return (
+  169 |         <div style={{ maxWidth: 860 }}>                                                                                                                                                                                                                      react-hooks/static-components
+  291:22  error    Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\profile\page.tsx:291:22
+  289 |                         <Field label="Present Address" name="address" defaultValue={profile?.address ?? ""} />
+  290 |                     </div>
+> 291 |                     <Field label="Primary Email Address" name="email" type="email" />
+      |                      ^^^^^ This component is created during render
+  292 |                 </div>
+  293 |
+  294 |                 {/* ÔöÇÔöÇ Social Links ÔöÇÔöÇ */}
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\profile\page.tsx:157:19
+  155 |     };
+  156 |
+> 157 |     const Field = ({ label, name, type = "text", defaultValue }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 158 |         <div>
+      | ^^^^^^^^^^^^^
+> 159 |             <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>{label}</label>
+      | ^^^^^^^^^^^^^
+> 160 |             <input type={type} name={name} defaultValue={defaultValue ?? profile?.[name] ?? ""}
+      | ^^^^^^^^^^^^^
+> 161 |                 style={inputStyle}
+      | ^^^^^^^^^^^^^
+> 162 |                 onFocus={(e) => e.target.style.borderColor = "var(--accent)"}
+      | ^^^^^^^^^^^^^
+> 163 |                 onBlur={(e) => e.target.style.borderColor = "var(--border)"}
+      | ^^^^^^^^^^^^^
+> 164 |             />
+      | ^^^^^^^^^^^^^
+> 165 |         </div>
+      | ^^^^^^^^^^^^^
+> 166 |     );
+      | ^^^^^^ The component is created during render here
+  167 |
+  168 |     return (
+  169 |         <div style={{ maxWidth: 860 }}>                                                                                                                                                                                                                                                                 react-hooks/static-components
+  409:55  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @next/next/no-img-element
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx
+   34:38  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+   64:21  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+   85:21  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+  126:89  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-explicit-any
+  165:22  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:165:22
+  163 |                 </h2>
+  164 |                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+> 165 |                     <Field label="Project Title" name="title" placeholder="e.g. AI Content Generator" />
+      |                      ^^^^^ This component is created during render
+  166 |                     <Field label="Tech Stack" name="tags" placeholder="Next.js, Tailwind, Prisma" />
+  167 |                 </div>
+  168 |                 <div style={{ marginBottom: 24 }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:126:19
+  124 |     };
+  125 |
+> 126 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 136 |     );
+      | ^^^^^^ The component is created during render here
+  137 |
+  138 |     return (
+  139 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                                                                                                     react-hooks/static-components
+  166:22  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:166:22
+  164 |                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+  165 |                     <Field label="Project Title" name="title" placeholder="e.g. AI Content Generator" />
+> 166 |                     <Field label="Tech Stack" name="tags" placeholder="Next.js, Tailwind, Prisma" />
+      |                      ^^^^^ This component is created during render
+  167 |                 </div>
+  168 |                 <div style={{ marginBottom: 24 }}>
+  169 |                     <label style={labelStyle}>Detailed Description</label>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:126:19
+  124 |     };
+  125 |
+> 126 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 136 |     );
+      | ^^^^^^ The component is created during render here
+  137 |
+  138 |     return (
+  139 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                                                react-hooks/static-components
+  175:22  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:175:22
+  173 |                 </div>
+  174 |                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 24 }}>
+> 175 |                     <Field label="Image URL" name="imageUrl" type="url" placeholder="https://..." />
+      |                      ^^^^^ This component is created during render
+  176 |                     <Field label="GitHub" name="githubUrl" type="url" placeholder="repo link..." />
+  177 |                     <Field label="Live Demo" name="liveUrl" type="url" placeholder="site link..." />
+  178 |                 </div>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:126:19
+  124 |     };
+  125 |
+> 126 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 136 |     );
+      | ^^^^^^ The component is created during render here
+  137 |
+  138 |     return (
+  139 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                                                   react-hooks/static-components
+  176:22  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:176:22
+  174 |                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 24 }}>
+  175 |                     <Field label="Image URL" name="imageUrl" type="url" placeholder="https://..." />
+> 176 |                     <Field label="GitHub" name="githubUrl" type="url" placeholder="repo link..." />
+      |                      ^^^^^ This component is created during render
+  177 |                     <Field label="Live Demo" name="liveUrl" type="url" placeholder="site link..." />
+  178 |                 </div>
+  179 |                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(255,255,255,0.02)", padding: 20, borderRadius: 16, border: "1px solid var(--border)" }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:126:19
+  124 |     };
+  125 |
+> 126 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 136 |     );
+      | ^^^^^^ The component is created during render here
+  137 |
+  138 |     return (
+  139 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                         react-hooks/static-components
+  177:22  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:177:22
+  175 |                     <Field label="Image URL" name="imageUrl" type="url" placeholder="https://..." />
+  176 |                     <Field label="GitHub" name="githubUrl" type="url" placeholder="repo link..." />
+> 177 |                     <Field label="Live Demo" name="liveUrl" type="url" placeholder="site link..." />
+      |                      ^^^^^ This component is created during render
+  178 |                 </div>
+  179 |                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "rgba(255,255,255,0.02)", padding: 20, borderRadius: 16, border: "1px solid var(--border)" }}>
+  180 |                     <label style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, fontWeight: 700, color: "var(--text-primary)", cursor: "pointer" }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:126:19
+  124 |     };
+  125 |
+> 126 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 136 |     );
+      | ^^^^^^ The component is created during render here
+  137 |
+  138 |     return (
+  139 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>   react-hooks/static-components
+  286:34  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:286:34
+  284 |                         <form onSubmit={handleEditSave}>
+  285 |                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+> 286 |                                 <Field label="Title" name="title" defaultValue={editingProject.title} />
+      |                                  ^^^^^ This component is created during render
+  287 |                                 <Field label="Stack" name="tags" defaultValue={editingProject.tags} />
+  288 |                             </div>
+  289 |                             <div style={{ marginBottom: 24 }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:126:19
+  124 |     };
+  125 |
+> 126 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 136 |     );
+      | ^^^^^^ The component is created during render here
+  137 |
+  138 |     return (
+  139 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                react-hooks/static-components
+  287:34  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:287:34
+  285 |                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+  286 |                                 <Field label="Title" name="title" defaultValue={editingProject.title} />
+> 287 |                                 <Field label="Stack" name="tags" defaultValue={editingProject.tags} />
+      |                                  ^^^^^ This component is created during render
+  288 |                             </div>
+  289 |                             <div style={{ marginBottom: 24 }}>
+  290 |                                 <label style={labelStyle}>Description</label>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:126:19
+  124 |     };
+  125 |
+> 126 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 136 |     );
+      | ^^^^^^ The component is created during render here
+  137 |
+  138 |     return (
+  139 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                           react-hooks/static-components
+  295:34  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:295:34
+  293 |                             </div>
+  294 |                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 32 }}>
+> 295 |                                 <Field label="Image" name="imageUrl" type="url" defaultValue={editingProject.imageUrl ?? ""} />
+      |                                  ^^^^^ This component is created during render
+  296 |                                 <Field label="GitHub" name="githubUrl" type="url" defaultValue={editingProject.githubUrl ?? ""} />
+  297 |                                 <Field label="Live" name="liveUrl" type="url" defaultValue={editingProject.liveUrl ?? ""} />
+  298 |                             </div>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:126:19
+  124 |     };
+  125 |
+> 126 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 136 |     );
+      | ^^^^^^ The component is created during render here
+  137 |
+  138 |     return (
+  139 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                 react-hooks/static-components
+  296:34  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:296:34
+  294 |                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 32 }}>
+  295 |                                 <Field label="Image" name="imageUrl" type="url" defaultValue={editingProject.imageUrl ?? ""} />
+> 296 |                                 <Field label="GitHub" name="githubUrl" type="url" defaultValue={editingProject.githubUrl ?? ""} />
+      |                                  ^^^^^ This component is created during render
+  297 |                                 <Field label="Live" name="liveUrl" type="url" defaultValue={editingProject.liveUrl ?? ""} />
+  298 |                             </div>
+  299 |                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:126:19
+  124 |     };
+  125 |
+> 126 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 136 |     );
+      | ^^^^^^ The component is created during render here
+  137 |
+  138 |     return (
+  139 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                               react-hooks/static-components
+  297:34  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:297:34
+  295 |                                 <Field label="Image" name="imageUrl" type="url" defaultValue={editingProject.imageUrl ?? ""} />
+  296 |                                 <Field label="GitHub" name="githubUrl" type="url" defaultValue={editingProject.githubUrl ?? ""} />
+> 297 |                                 <Field label="Live" name="liveUrl" type="url" defaultValue={editingProject.liveUrl ?? ""} />
+      |                                  ^^^^^ This component is created during render
+  298 |                             </div>
+  299 |                             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+  300 |                                 <label style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, fontWeight: 700, color: "var(--accent)" }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\projects\page.tsx:126:19
+  124 |     };
+  125 |
+> 126 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 127 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 128 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 136 |     );
+      | ^^^^^^ The component is created during render here
+  137 |
+  138 |     return (
+  139 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>  react-hooks/static-components
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\publications\page.tsx
+   24:121  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   35:74   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   43:40   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   46:52   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   61:38   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   84:29   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   94:21   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  127:21   error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  198:164  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  316:164  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx
+   20:40   error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-explicit-any
+   23:52   error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-explicit-any
+   36:38   error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-explicit-any
+   59:29   error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-explicit-any
+   66:21   error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-explicit-any
+   88:21   error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-explicit-any
+  116:107  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-explicit-any
+  157:22   error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:157:22
+  155 |
+  156 |                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+> 157 |                     <Field label="Full Name" name="name" required placeholder="e.g. Dr. Sarah Jenkins" />
+      |                      ^^^^^ This component is created during render
+  158 |                     <Field label="Designation" name="designation" required placeholder="e.g. Research Director" />
+  159 |                 </div>
+  160 |
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "", required = false }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 129 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 130 |     );
+      | ^^^^^^ The component is created during render here
+  131 |
+  132 |     return (
+  133 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                                                                                                                                                                                                                                                      react-hooks/static-components
+  158:22   error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:158:22
+  156 |                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+  157 |                     <Field label="Full Name" name="name" required placeholder="e.g. Dr. Sarah Jenkins" />
+> 158 |                     <Field label="Designation" name="designation" required placeholder="e.g. Research Director" />
+      |                      ^^^^^ This component is created during render
+  159 |                 </div>
+  160 |
+  161 |                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginBottom: 32 }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "", required = false }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 129 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 130 |     );
+      | ^^^^^^ The component is created during render here
+  131 |
+  132 |     return (
+  133 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                                                                                                                                     react-hooks/static-components
+  162:22   error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:162:22
+  160 |
+  161 |                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginBottom: 32 }}>
+> 162 |                     <Field label="Company / University" name="company" placeholder="e.g. MIT Lab" />
+      |                      ^^^^^ This component is created during render
+  163 |                     <Field label="Email" name="email" type="email" placeholder="sarah@mit.edu" />
+  164 |                     <Field label="Phone Number" name="phone" type="tel" placeholder="+1..." />
+  165 |                 </div>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "", required = false }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 129 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 130 |     );
+      | ^^^^^^ The component is created during render here
+  131 |
+  132 |     return (
+  133 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                                                                                                                                                                         react-hooks/static-components
+  163:22   error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:163:22
+  161 |                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginBottom: 32 }}>
+  162 |                     <Field label="Company / University" name="company" placeholder="e.g. MIT Lab" />
+> 163 |                     <Field label="Email" name="email" type="email" placeholder="sarah@mit.edu" />
+      |                      ^^^^^ This component is created during render
+  164 |                     <Field label="Phone Number" name="phone" type="tel" placeholder="+1..." />
+  165 |                 </div>
+  166 |
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "", required = false }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 129 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 130 |     );
+      | ^^^^^^ The component is created during render here
+  131 |
+  132 |     return (
+  133 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                                                                                                                                                                         react-hooks/static-components
+  164:22   error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:164:22
+  162 |                     <Field label="Company / University" name="company" placeholder="e.g. MIT Lab" />
+  163 |                     <Field label="Email" name="email" type="email" placeholder="sarah@mit.edu" />
+> 164 |                     <Field label="Phone Number" name="phone" type="tel" placeholder="+1..." />
+      |                      ^^^^^ This component is created during render
+  165 |                 </div>
+  166 |
+  167 |                 <div style={{ display: "flex", justifyContent: "flex-end", background: "rgba(255,255,255,0.02)", padding: 20, borderRadius: 16, border: "1px solid var(--border)", marginTop: 8 }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "", required = false }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 129 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 130 |     );
+      | ^^^^^^ The component is created during render here
+  131 |
+  132 |     return (
+  133 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                                                                                      react-hooks/static-components
+  250:34   error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:250:34
+  248 |                         <form onSubmit={handleEditSave}>
+  249 |                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+> 250 |                                 <Field label="Full Name" name="name" required defaultValue={editingItem.name} />
+      |                                  ^^^^^ This component is created during render
+  251 |                                 <Field label="Designation" name="designation" required defaultValue={editingItem.designation} />
+  252 |                             </div>
+  253 |                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginBottom: 32 }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "", required = false }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 129 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 130 |     );
+      | ^^^^^^ The component is created during render here
+  131 |
+  132 |     return (
+  133 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                       react-hooks/static-components
+  251:34   error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:251:34
+  249 |                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+  250 |                                 <Field label="Full Name" name="name" required defaultValue={editingItem.name} />
+> 251 |                                 <Field label="Designation" name="designation" required defaultValue={editingItem.designation} />
+      |                                  ^^^^^ This component is created during render
+  252 |                             </div>
+  253 |                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginBottom: 32 }}>
+  254 |                                 <Field label="Company" name="company" defaultValue={editingItem.company} />
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "", required = false }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 129 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 130 |     );
+      | ^^^^^^ The component is created during render here
+  131 |
+  132 |     return (
+  133 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                    react-hooks/static-components
+  254:34   error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:254:34
+  252 |                             </div>
+  253 |                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginBottom: 32 }}>
+> 254 |                                 <Field label="Company" name="company" defaultValue={editingItem.company} />
+      |                                  ^^^^^ This component is created during render
+  255 |                                 <Field label="Email" name="email" type="email" defaultValue={editingItem.email} />
+  256 |                                 <Field label="Phone Number" name="phone" type="tel" defaultValue={editingItem.phone} />
+  257 |                             </div>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "", required = false }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 129 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 130 |     );
+      | ^^^^^^ The component is created during render here
+  131 |
+  132 |     return (
+  133 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                                                 react-hooks/static-components
+  255:34   error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:255:34
+  253 |                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginBottom: 32 }}>
+  254 |                                 <Field label="Company" name="company" defaultValue={editingItem.company} />
+> 255 |                                 <Field label="Email" name="email" type="email" defaultValue={editingItem.email} />
+      |                                  ^^^^^ This component is created during render
+  256 |                                 <Field label="Phone Number" name="phone" type="tel" defaultValue={editingItem.phone} />
+  257 |                             </div>
+  258 |                             <div style={{ display: "flex", gap: 12, justifyContent: "flex-end", marginTop: 16 }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "", required = false }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 129 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 130 |     );
+      | ^^^^^^ The component is created during render here
+  131 |
+  132 |     return (
+  133 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                  react-hooks/static-components
+  256:34   error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:256:34
+  254 |                                 <Field label="Company" name="company" defaultValue={editingItem.company} />
+  255 |                                 <Field label="Email" name="email" type="email" defaultValue={editingItem.email} />
+> 256 |                                 <Field label="Phone Number" name="phone" type="tel" defaultValue={editingItem.phone} />
+      |                                  ^^^^^ This component is created during render
+  257 |                             </div>
+  258 |                             <div style={{ display: "flex", gap: 12, justifyContent: "flex-end", marginTop: 16 }}>
+  259 |                                 <button type="button" onClick={() => setEditingItem(null)} style={{ background: "transparent", border: "1px solid var(--border)", color: "var(--text-muted)", padding: "12px 24px", borderRadius: 12, fontWeight: 700, cursor: "pointer" }}>Discard</button>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\references\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "", required = false }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 129 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 130 |     );
+      | ^^^^^^ The component is created during render here
+  131 |
+  132 |     return (
+  133 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>  react-hooks/static-components
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\skills\page.tsx
+   20:42  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   23:52  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   36:38  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   59:29  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   66:21  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+   88:21  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+  116:89  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          @typescript-eslint/no-explicit-any
+  158:22  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\skills\page.tsx:158:22
+  156 |                 </h2>
+  157 |                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+> 158 |                     <Field label="Skill Name" name="name" placeholder="e.g. TypeScript" />
+      |                      ^^^^^ This component is created during render
+  159 |                     <Field label="Category" name="category" placeholder="e.g. Frontend" />
+  160 |                 </div>
+  161 |                 <div style={{ display: "flex", justifyContent: "flex-end", background: "rgba(255,255,255,0.02)", padding: 20, borderRadius: 16, border: "1px solid var(--border)", marginTop: 8 }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\skills\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 131 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 132 |     );
+      | ^^^^^^ The component is created during render here
+  133 |
+  134 |     return (
+  135 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                                       react-hooks/static-components
+  159:22  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\skills\page.tsx:159:22
+  157 |                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
+  158 |                     <Field label="Skill Name" name="name" placeholder="e.g. TypeScript" />
+> 159 |                     <Field label="Category" name="category" placeholder="e.g. Frontend" />
+      |                      ^^^^^ This component is created during render
+  160 |                 </div>
+  161 |                 <div style={{ display: "flex", justifyContent: "flex-end", background: "rgba(255,255,255,0.02)", padding: 20, borderRadius: 16, border: "1px solid var(--border)", marginTop: 8 }}>
+  162 |                     <button type="submit" className="btn-glow" style={{ height: 46, display: "flex", alignItems: "center", gap: 8 }} disabled={saving}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\skills\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 131 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 132 |     );
+      | ^^^^^^ The component is created during render here
+  133 |
+  134 |     return (
+  135 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                     react-hooks/static-components
+  245:34  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\skills\page.tsx:245:34
+  243 |                         <form onSubmit={handleEditSave}>
+  244 |                             <div style={{ display: "flex", flexDirection: "column", gap: 24, marginBottom: 32 }}>
+> 245 |                                 <Field label="Skill Name" name="name" defaultValue={editingItem.name} />
+      |                                  ^^^^^ This component is created during render
+  246 |                                 <Field label="Category" name="category" defaultValue={editingItem.category} />
+  247 |                             </div>
+  248 |                             <div style={{ display: "flex", gap: 12, justifyContent: "flex-end" }}>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\skills\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 131 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 132 |     );
+      | ^^^^^^ The component is created during render here
+  133 |
+  134 |     return (
+  135 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>                                                                                                                                                                                                                                      react-hooks/static-components
+  246:34  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\skills\page.tsx:246:34
+  244 |                             <div style={{ display: "flex", flexDirection: "column", gap: 24, marginBottom: 32 }}>
+  245 |                                 <Field label="Skill Name" name="name" defaultValue={editingItem.name} />
+> 246 |                                 <Field label="Category" name="category" defaultValue={editingItem.category} />
+      |                                  ^^^^^ This component is created during render
+  247 |                             </div>
+  248 |                             <div style={{ display: "flex", gap: 12, justifyContent: "flex-end" }}>
+  249 |                                 <button type="button" onClick={() => setEditingItem(null)} style={{ background: "transparent", border: "1px solid var(--border)", color: "var(--text-muted)", padding: "10px 20px", borderRadius: 10, fontWeight: 700, cursor: "pointer" }}>Discard</button>
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\admin\skills\page.tsx:116:19
+  114 |     );
+  115 |
+> 116 |     const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 117 |         <div style={{ width: "100%" }}>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 118 |             <label style={labelStyle}>{label}</label>
+      ÔÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 131 |         </div>
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 132 |     );
+      | ^^^^^^ The component is created during render here
+  133 |
+  134 |     return (
+  135 |         <div style={{ maxWidth: 1000, paddingBottom: 100 }}>  react-hooks/static-components
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\activities\route.ts
+    9:13  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   13:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   21:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   29:31  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   32:21  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   39:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   47:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   65:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   73:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   96:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+  104:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+  115:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\auth\[...nextauth]\route.ts
+  25:96  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  33:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  34:37  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  40:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  41:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\certificates\route.ts
+    8:9   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   11:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   19:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   27:31  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   30:21  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   37:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   45:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   56:17  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   63:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   71:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   87:17  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   94:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+  102:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+  113:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\education\route.ts
+    9:13  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   13:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   21:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   29:31  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   32:21  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   39:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   47:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   73:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   81:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+  107:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+  115:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+  126:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\experience\route.ts
+    9:13  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   13:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   21:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   29:31  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   32:21  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   39:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   47:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   65:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   73:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   96:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+  104:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+  115:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\posts\route.ts
+  10:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  18:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  31:44  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  35:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  43:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  54:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\profile\route.ts
+  12:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  20:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  32:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  42:56  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  56:56  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  67:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\projects\route.ts
+  10:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  18:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  26:31  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  35:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  43:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  54:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  62:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  78:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  86:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  96:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\publications\route.ts
+    8:47  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   12:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+   20:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   28:31  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   29:28  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   37:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+   45:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   54:46  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   65:21  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   73:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   86:46  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+   98:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+  106:42  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  115:26  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  117:14  warning  'error' is defined but never used         @typescript-eslint/no-unused-vars
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\references\route.ts
+    9:13  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   13:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   21:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   29:31  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   32:21  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   39:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   47:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   64:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   72:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   94:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+  102:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+  113:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\skills\route.ts
+    9:13  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   13:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   21:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   29:31  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   32:21  error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+   39:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   47:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   58:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   66:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+   82:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   90:42  error    Unexpected any. Specify a different type                                                                             @typescript-eslint/no-explicit-any
+  101:14  warning  'error' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\api\upload\route.ts
+  10:42  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\layout.tsx
+  19:9  warning  Custom fonts not added in `pages/_document.js` will only load for a single page. This is discouraged. See: https://nextjs.org/docs/messages/no-page-custom-font  @next/next/no-page-custom-font
+
+C:\Md. Mirazul Hasan\my-portfolio\src\app\page.tsx
+   18:7   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                      @typescript-eslint/ban-ts-comment
+   30:7   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                      @typescript-eslint/ban-ts-comment
+   41:7   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                      @typescript-eslint/ban-ts-comment
+   50:27  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   53:27  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   56:27  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+   62:7   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                      @typescript-eslint/ban-ts-comment
+   73:7   error    Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free                                                                                                                                                                      @typescript-eslint/ban-ts-comment
+  106:48  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  106:60  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  174:19  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  194:18  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+  211:85  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  216:49  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  231:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  244:26  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  247:61  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  268:59  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  292:39  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  321:38  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  342:39  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  371:30  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  372:40  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  383:44  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  383:49  warning  'idx' is defined but never used                                                                                                                                                                                                                                                          @typescript-eslint/no-unused-vars
+  414:37  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  434:35  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  459:36  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  483:31  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  503:73  error    `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`                                                                                                                                                                                                                          react/no-unescaped-entities
+
+C:\Md. Mirazul Hasan\my-portfolio\src\components\ClientInteractivity.tsx
+  9:53  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Md. Mirazul Hasan\my-portfolio\src\components\ThemeToggle.tsx
+  11:5  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Md. Mirazul Hasan\my-portfolio\src\components\ThemeToggle.tsx:11:5
+   9 |
+  10 |   useEffect(() => {
+> 11 |     setMounted(true);
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  12 |     const saved = localStorage.getItem("theme") || "dark";
+  13 |     setTheme(saved);
+  14 |   }, []);  react-hooks/set-state-in-effect
+
+C:\Md. Mirazul Hasan\my-portfolio\src\components\admin\Sidebar.tsx
+  25:44  error    Unexpected any. Specify a different type                                                                                                                                                                                                                                                 @typescript-eslint/no-explicit-any
+  78:33  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+Ô£û 275 problems (220 errors, 55 warnings)
+
