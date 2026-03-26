@@ -2,6 +2,8 @@ import prisma from "@/lib/db";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 interface PostPageProps {
   params: Promise<{ id: string }>;
 }
@@ -23,8 +25,11 @@ export default async function PostPage({ params }: PostPageProps) {
   }
 
   return (
-    <main style={{ minHeight: "100vh", padding: "120px 5% 60px" }}>
-      <div style={{ maxWidth: 800, margin: "0 auto" }}>
+    <main
+      className="space-scene"
+      style={{ minHeight: "100vh", padding: "120px 5% 60px", position: "relative" }}
+    >
+      <div style={{ maxWidth: 800, margin: "0 auto", position: "relative", zIndex: 2 }}>
         <Link href="/#blog" style={{ 
           display: "inline-flex", 
           alignItems: "center", 

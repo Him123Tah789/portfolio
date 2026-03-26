@@ -2,10 +2,10 @@
 
 
 :root {
-  --bg-primary: #000000;
-  --bg-card: #09090b;
-  --bg-nav: rgba(0, 0, 0, 0.8);
-  --bg-section: #050505;
+  --bg-primary: #030712;
+  --bg-card: #0a0f1e;
+  --bg-nav: rgba(3, 7, 18, 0.78);
+  --bg-section: #040a1a;
   --border: rgba(255, 255, 255, 0.06);
   --accent: #6c63ff;
   --accent-2: #ff6584;
@@ -13,6 +13,12 @@
   --text-muted: #94a3b8;
   --avatar-bg: #09090b;
   --glass-border: rgba(108, 99, 255, 0.5);
+  --chat-shell-bg: #0b0f1a;
+  --chat-shell-border: rgba(255, 255, 255, 0.08);
+  --chat-shell-shadow: 0 28px 70px rgba(0, 0, 0, 0.45);
+  --chat-header-bg: linear-gradient(135deg, rgba(108, 99, 255, 0.28), rgba(255, 101, 132, 0.16));
+  --chat-assistant-bg: rgba(148, 163, 184, 0.14);
+  --chat-input-bg: rgba(148, 163, 184, 0.1);
 }
 
 [data-theme="light"] {
@@ -27,6 +33,12 @@
   --text-muted: #475569;
   --avatar-bg: #f8f9fa;
   --glass-border: rgba(108, 99, 255, 0.4);
+  --chat-shell-bg: #ffffff;
+  --chat-shell-border: rgba(15, 23, 42, 0.1);
+  --chat-shell-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
+  --chat-header-bg: linear-gradient(135deg, rgba(108, 99, 255, 0.2), rgba(255, 101, 132, 0.12));
+  --chat-assistant-bg: rgba(148, 163, 184, 0.18);
+  --chat-input-bg: rgba(148, 163, 184, 0.14);
 }
 
 * {
@@ -45,6 +57,56 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+.code-float-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.code-float-chip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: min(520px, 78vw);
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--bg-card) 80%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0.22;
+  color: var(--text-muted);
+  white-space: nowrap;
+  animation: codeFloatY ease-in-out infinite;
+}
+
+.code-float-lang {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.code-float-text {
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes codeFloatY {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
 }
 
 /* Glassmorphism card */
@@ -114,6 +176,149 @@ body {
 .dot-pattern {
   background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: 32px 32px;
+}
+
+.space-scene {
+  background:
+    radial-gradient(1200px circle at 20% 10%, rgba(124, 58, 237, 0.24), transparent 60%),
+    radial-gradient(900px circle at 82% 24%, rgba(37, 99, 235, 0.2), transparent 58%),
+    radial-gradient(900px circle at 50% 100%, rgba(59, 130, 246, 0.14), transparent 60%),
+    linear-gradient(180deg, #02030a 0%, #04091a 52%, #060d20 100%);
+}
+
+.space-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.space-stars {
+  position: absolute;
+  inset: -20%;
+  background-repeat: repeat;
+  animation: spaceDrift linear infinite;
+}
+
+.space-stars-far {
+  opacity: 0.32;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 110px 80px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 180px 150px, rgba(191,219,254,0.7), transparent);
+  background-size: 220px 220px;
+  animation-duration: 160s;
+}
+
+.space-stars-mid {
+  opacity: 0.5;
+  background-image:
+    radial-gradient(1.4px 1.4px at 40px 60px, rgba(255,255,255,0.85), transparent),
+    radial-gradient(1.3px 1.3px at 140px 130px, rgba(167,243,208,0.75), transparent),
+    radial-gradient(1.4px 1.4px at 210px 40px, rgba(196,181,253,0.82), transparent);
+  background-size: 260px 260px;
+  animation-duration: 115s;
+}
+
+.space-stars-near {
+  opacity: 0.7;
+  background-image:
+    radial-gradient(2px 2px at 50px 80px, rgba(255,255,255,0.95), transparent),
+    radial-gradient(1.8px 1.8px at 180px 200px, rgba(254,240,138,0.85), transparent),
+    radial-gradient(2px 2px at 290px 120px, rgba(191,219,254,0.9), transparent);
+  background-size: 330px 330px;
+  animation-duration: 80s;
+}
+
+.space-nebula {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(70px);
+  opacity: 0.4;
+  animation: nebulaFloat ease-in-out infinite;
+}
+
+.space-nebula-a {
+  width: 520px;
+  height: 520px;
+  top: -120px;
+  left: -120px;
+  background: radial-gradient(circle, rgba(147,51,234,0.46), rgba(59,130,246,0.05) 70%);
+  animation-duration: 19s;
+}
+
+.space-nebula-b {
+  width: 420px;
+  height: 420px;
+  top: 25%;
+  right: -100px;
+  background: radial-gradient(circle, rgba(56,189,248,0.3), rgba(59,130,246,0.04) 70%);
+  animation-duration: 24s;
+}
+
+.space-nebula-c {
+  width: 460px;
+  height: 460px;
+  bottom: -150px;
+  left: 35%;
+  background: radial-gradient(circle, rgba(96,165,250,0.25), rgba(236,72,153,0.04) 70%);
+  animation-duration: 22s;
+}
+
+.space-object {
+  position: absolute;
+  width: 220px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.95));
+  box-shadow: 0 0 12px rgba(255,255,255,0.65);
+  border-radius: 999px;
+  opacity: 0;
+  transform: rotate(-22deg);
+  animation: shootingObject ease-in-out infinite;
+}
+
+.space-object-1 {
+  top: 18%;
+  left: -30%;
+  animation-duration: 13s;
+}
+
+.space-object-2 {
+  top: 45%;
+  left: -35%;
+  animation-duration: 17s;
+  animation-delay: 4s;
+}
+
+.space-object-3 {
+  top: 70%;
+  left: -25%;
+  animation-duration: 21s;
+  animation-delay: 8s;
+}
+
+@keyframes spaceDrift {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-10%, -6%, 0); }
+}
+
+@keyframes nebulaFloat {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(18px, -14px, 0) scale(1.05); }
+}
+
+@keyframes shootingObject {
+  0%, 60%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-22deg);
+    opacity: 0;
+  }
+  62% {
+    opacity: 0.85;
+  }
+  78% {
+    transform: translate3d(140vw, -55vh, 0) rotate(-22deg);
+    opacity: 0;
+  }
 }
 
 /* Fade-in animation */

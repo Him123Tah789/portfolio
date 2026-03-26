@@ -13,6 +13,7 @@ export default function ThemeToggle() {
     const saved = localStorage.getItem("theme") || "dark";
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setTheme(saved);
+    document.documentElement.setAttribute("data-theme", saved);
   }, []);
 
   const toggle = () => {

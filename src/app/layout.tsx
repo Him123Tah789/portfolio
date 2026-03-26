@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ChatBot from "@/components/ChatBot";
+import GlobalClientOverlays from "@/components/GlobalClientOverlays";
 
 export const metadata: Metadata = {
-  title: "Md. Mirazul Hasan | Portfolio",
-  description: "Full Stack Developer — building clean, scalable web applications.",
+  title: "Faishal Uddin Himel | Portfolio",
+  description: "AI & Backend Developer building intelligent, secure, and scalable backend systems.",
 };
 
 export default function RootLayout({
@@ -18,21 +18,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                if (localStorage.theme === 'light') {
-                  document.documentElement.setAttribute('data-theme', 'light');
-                }
-              } catch (_) {}
-            `,
-          }}
-        />
       </head>
       <body suppressHydrationWarning>
-        {children}
-        <ChatBot />
+        <GlobalClientOverlays />
+        <div style={{ position: "relative", zIndex: 2 }}>
+          {children}
+        </div>
       </body>
     </html>
   );

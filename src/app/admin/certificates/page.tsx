@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import { GripVertical, Award, Calendar, ExternalLink } from "lucide-react";
+import { GripVertical, Award, Calendar } from "lucide-react";
 
 function DroppableFix({ children, ...props }: any) {
     const [enabled, setEnabled] = useState(false);
@@ -34,6 +34,18 @@ function toDateInput(dateStr: string | null | undefined) {
     return new Date(dateStr).toISOString().split("T")[0];
 }
 
+function titleFromFileName(fileName: string) {
+    return fileName
+        .replace(/\.[^/.]+$/, "")
+        .replace(/[_-]+/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+}
+
+function dateFromTimestamp(ts: number) {
+    return new Date(ts).toISOString().split("T")[0];
+}
+
 const Field = ({ label, name, type = "text", placeholder = "", defaultValue = "" }: any) => (
     <div style={{ width: "100%" }}>
         <label style={labelStyle}>{label}</label>
@@ -57,15 +69,22 @@ export default function CertificatesAdmin() {
     const [editingItem, setEditingItem] = useState<any | null>(null);
     const [editSaving, setEditSaving] = useState(false);
     const [isReordering, setIsReordering] = useState(false);
+    const [newProofUrl, setNewProofUrl] = useState("");
+    const [editProofUrl, setEditProofUrl] = useState("");
+    const [uploadingProof, setUploadingProof] = useState(false);
+    const [uploadingEditProof, setUploadingEditProof] = useState(false);
+    const addFormRef = useRef<HTMLFormElement | null>(null);
+    const editFormRef = useRef<HTMLFormElement | null>(null);
+
+    const fetchCertificates = useCallback(async () => {
+        const res = await fetch("/api/certificates");
+        const data = await res.json();
+        setCerts(Array.isArray(data) ? data : []);
+    }, []);
 
     useEffect(() => {
-        fetch("/api/certificates")
-            .then((res) => res.json())
-            .then((data) => {
-                setCerts(Array.isArray(data) ? data : []);
-                setLoading(false);
-            });
-    }, []);
+        fetchCertificates().finally(() => setLoading(false));
+    }, [fetchCertificates]);
 
     const onDragEnd = async (result: any) => {
         if (!result.destination) return;
@@ -85,6 +104,7 @@ export default function CertificatesAdmin() {
                     orders: updatedItems.map((c, i) => ({ id: c.id, order: i }))
                 }),
             });
+            await fetchCertificates();
         } catch (error) {
             console.error("Failed to sync order", error);
         }
@@ -97,6 +117,7 @@ export default function CertificatesAdmin() {
         const form = new FormData(e.currentTarget);
         const data: any = Object.fromEntries(form.entries());
         data.order = certs.length;
+        data.imageUrl = newProofUrl || "";
 
         const res = await fetch("/api/certificates", {
             method: "POST",
@@ -105,8 +126,8 @@ export default function CertificatesAdmin() {
         });
 
         if (res.ok) {
-            const newCert = await res.json();
-            setCerts([...certs, newCert]);
+            await fetchCertificates();
+            setNewProofUrl("");
             (e.target as HTMLFormElement).reset();
         }
         setSaving(false);
@@ -118,6 +139,7 @@ export default function CertificatesAdmin() {
         setEditSaving(true);
         const fd = new FormData(e.currentTarget);
         const data: any = Object.fromEntries(fd.entries());
+        data.imageUrl = editProofUrl || "";
 
         const res = await fetch(`/api/certificates?id=${editingItem.id}`, {
             method: "PUT",
@@ -125,18 +147,45 @@ export default function CertificatesAdmin() {
             body: JSON.stringify(data),
         });
         if (res.ok) {
-            const updated = await res.json();
-            setCerts(certs.map((c) => c.id === updated.id ? { ...updated, order: c.order } : c));
+            await fetchCertificates();
             setEditingItem(null);
         }
         setEditSaving(false);
+    };
+
+    const uploadProofFile = async (
+        file: File,
+        setUrl: (url: string) => void,
+        setUploading: (value: boolean) => void,
+        onUploaded?: (file: File, url: string) => void
+    ) => {
+        setUploading(true);
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("fileName", file.name.replace(/\.[^/.]+$/, ""));
+
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!res.ok) return;
+            const data = await res.json();
+            if (data?.url) {
+                setUrl(data.url);
+                onUploaded?.(file, data.url);
+            }
+        } finally {
+            setUploading(false);
+        }
     };
 
     const handleDelete = async (id: string) => {
         if (!confirm("Delete this certificate record?")) return;
         const res = await fetch(`/api/certificates?id=${id}`, { method: "DELETE" });
         if (res.ok) {
-            setCerts(certs.filter((c) => c.id !== id));
+            await fetchCertificates();
         }
     };
 
@@ -168,7 +217,7 @@ export default function CertificatesAdmin() {
             </div>
 
             {/* ── ADD FORM ── */}
-            <form onSubmit={handleSubmit} className="glass" style={{ padding: 40, border: "1px solid var(--border)", marginBottom: 48 }}>
+            <form ref={addFormRef} onSubmit={handleSubmit} className="glass" style={{ padding: 40, border: "1px solid var(--border)", marginBottom: 48 }}>
                 <h2 style={{ fontWeight: 800, fontSize: "1.1rem", marginBottom: 32, color: "var(--text-primary)", display: "flex", alignItems: "center", gap: 12 }}>
                     <Award size={20} color="var(--accent)" />
                     Add New Credential
@@ -177,10 +226,56 @@ export default function CertificatesAdmin() {
                     <Field label="Certificate Title" name="title" placeholder="e.g. AWS Solutions Architect" />
                     <Field label="Issuing Organization" name="issuer" placeholder="e.g. Amazon Web Services" />
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 32 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 32 }}>
                     <Field label="Date Issued" name="issueDate" type="date" />
                     <Field label="Credential ID" name="credentialId" placeholder="Optional" />
-                    <Field label="Verify URL" name="credentialUrl" type="url" placeholder="https://..." />
+                </div>
+                <div style={{ marginBottom: 28 }}>
+                    <label style={labelStyle}>Certificate Proof (File URL)</label>
+                    <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+                        <input
+                            type="text"
+                            name="imageUrl"
+                            value={newProofUrl}
+                            onChange={(e) => setNewProofUrl(e.target.value)}
+                            placeholder="/uploads/your-certificate.pdf or https://..."
+                            style={{ ...inputStyle, flex: 1 }}
+                        />
+                        <label style={{
+                            border: "1px solid var(--border)",
+                            borderRadius: 10,
+                            padding: "10px 14px",
+                            fontSize: 12,
+                            fontWeight: 700,
+                            color: "var(--text-primary)",
+                            cursor: "pointer",
+                            background: "var(--bg-section)",
+                        }}>
+                            {uploadingProof ? "Uploading..." : "Upload File"}
+                            <input
+                                type="file"
+                                style={{ display: "none" }}
+                                onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (!file) return;
+                                    void uploadProofFile(file, setNewProofUrl, setUploadingProof, (uploadedFile) => {
+                                        const formEl = addFormRef.current;
+                                        if (!formEl) return;
+
+                                        const titleInput = formEl.elements.namedItem("title") as HTMLInputElement | null;
+                                        const issueDateInput = formEl.elements.namedItem("issueDate") as HTMLInputElement | null;
+
+                                        if (titleInput && !titleInput.value.trim()) {
+                                            titleInput.value = titleFromFileName(uploadedFile.name);
+                                        }
+                                        if (issueDateInput && !issueDateInput.value) {
+                                            issueDateInput.value = dateFromTimestamp(uploadedFile.lastModified || Date.now());
+                                        }
+                                    });
+                                }}
+                            />
+                        </label>
+                    </div>
                 </div>
                 <div style={{ display: "flex", justifyContent: "flex-end", background: "rgba(255,255,255,0.02)", padding: 20, borderRadius: 16, border: "1px solid var(--border)", marginTop: 8 }}>
                     <button type="submit" className="btn-glow" disabled={saving}>
@@ -246,16 +341,11 @@ export default function CertificatesAdmin() {
                                                                 {new Date(cert.issuedAt).toLocaleDateString('en-GB')}
                                                             </p>
                                                         )}
-                                                        {cert.credentialUrl && (
-                                                            <a href={cert.credentialUrl} target="_blank" rel="noreferrer" style={{ fontSize: 12, color: "var(--text-muted)", textDecoration: "none", fontWeight: 700, display: "flex", alignItems: "center", gap: 4 }}>
-                                                                VERIFY <ExternalLink size={12} />
-                                                            </a>
-                                                        )}
                                                     </div>
                                                 </div>
 
                                                 <div style={{ display: "flex", gap: 8, marginLeft: 24 }}>
-                                                    <button onClick={() => setEditingItem(cert)}
+                                                    <button onClick={() => { setEditingItem(cert); setEditProofUrl(cert.imageUrl || ""); }}
                                                         style={{ background: "rgba(255,255,255,0.05)", border: "1px solid var(--border)", color: "var(--text-primary)", cursor: "pointer", fontSize: 12, padding: "7px 14px", borderRadius: 8, fontWeight: 700 }}>
                                                         Edit
                                                     </button>
@@ -282,15 +372,61 @@ export default function CertificatesAdmin() {
                     <div className="glass" style={{ width: "100%", maxWidth: 680, padding: 48, borderRadius: 24, border: "1px solid var(--border)", maxHeight: "90vh", overflowY: "auto" }}
                         onClick={(e) => e.stopPropagation()}>
                         <h2 style={{ fontWeight: 800, fontSize: "1.3rem", marginBottom: 32 }}>Edit Certificate</h2>
-                        <form onSubmit={handleEditSave}>
+                        <form ref={editFormRef} onSubmit={handleEditSave}>
                             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 24 }}>
                                 <Field label="Title" name="title" defaultValue={editingItem.title} />
                                 <Field label="Issuer" name="issuer" defaultValue={editingItem.issuer} />
                             </div>
-                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 32 }}>
+                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 32 }}>
                                 <Field label="Date" name="issueDate" type="date" defaultValue={toDateInput(editingItem.issuedAt)} />
                                 <Field label="ID" name="credentialId" defaultValue={editingItem.credentialId ?? ""} />
-                                <Field label="Verify URL" name="credentialUrl" type="url" defaultValue={editingItem.credentialUrl ?? ""} />
+                            </div>
+                            <div style={{ marginBottom: 28 }}>
+                                <label style={labelStyle}>Certificate Proof (File URL)</label>
+                                <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+                                    <input
+                                        type="text"
+                                        name="imageUrl"
+                                        value={editProofUrl}
+                                        onChange={(e) => setEditProofUrl(e.target.value)}
+                                        placeholder="/uploads/your-certificate.pdf or https://..."
+                                        style={{ ...inputStyle, flex: 1 }}
+                                    />
+                                    <label style={{
+                                        border: "1px solid var(--border)",
+                                        borderRadius: 10,
+                                        padding: "10px 14px",
+                                        fontSize: 12,
+                                        fontWeight: 700,
+                                        color: "var(--text-primary)",
+                                        cursor: "pointer",
+                                        background: "var(--bg-section)",
+                                    }}>
+                                        {uploadingEditProof ? "Uploading..." : "Upload File"}
+                                        <input
+                                            type="file"
+                                            style={{ display: "none" }}
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0];
+                                                if (!file) return;
+                                                void uploadProofFile(file, setEditProofUrl, setUploadingEditProof, (uploadedFile) => {
+                                                    const formEl = editFormRef.current;
+                                                    if (!formEl) return;
+
+                                                    const titleInput = formEl.elements.namedItem("title") as HTMLInputElement | null;
+                                                    const issueDateInput = formEl.elements.namedItem("issueDate") as HTMLInputElement | null;
+
+                                                    if (titleInput && !titleInput.value.trim()) {
+                                                        titleInput.value = titleFromFileName(uploadedFile.name);
+                                                    }
+                                                    if (issueDateInput && !issueDateInput.value) {
+                                                        issueDateInput.value = dateFromTimestamp(uploadedFile.lastModified || Date.now());
+                                                    }
+                                                });
+                                            }}
+                                        />
+                                    </label>
+                                </div>
                             </div>
                             <div style={{ display: "flex", gap: 12, justifyContent: "flex-end" }}>
                                 <button type="button" onClick={() => setEditingItem(null)} style={{ background: "transparent", border: "1px solid var(--border)", color: "var(--text-muted)", padding: "10px 20px", borderRadius: 10, fontWeight: 700, cursor: "pointer" }}>Cancel</button>

@@ -47,7 +47,7 @@ export async function POST(req: Request) {
         }
 
         const body = await req.json();
-        const { title, issuer, issueDate, credentialId, credentialUrl } = body;
+        const { title, issuer, issueDate, credentialId, credentialUrl, imageUrl } = body;
 
         const certificate = await prisma.certificate.create({
             data: {
@@ -55,8 +55,9 @@ export async function POST(req: Request) {
                 issuer,
                 // @ts-ignore 
                 issuedAt: issueDate ? new Date(issueDate) : null,
-                credentialId,
-                credentialUrl
+                credentialId: credentialId || null,
+                credentialUrl: credentialUrl || null,
+                imageUrl: imageUrl || null,
             }
         });
         return NextResponse.json(certificate);
@@ -77,7 +78,7 @@ export async function PUT(req: Request) {
         if (!id) return NextResponse.json({ error: "ID is required" }, { status: 400 });
 
         const body = await req.json();
-        const { title, issuer, issueDate, credentialId, credentialUrl } = body;
+        const { title, issuer, issueDate, credentialId, credentialUrl, imageUrl } = body;
 
         const certificate = await prisma.certificate.update({
             where: { id },
@@ -88,6 +89,7 @@ export async function PUT(req: Request) {
                 issuedAt: issueDate ? new Date(issueDate) : null,
                 credentialId: credentialId || null,
                 credentialUrl: credentialUrl || null,
+                imageUrl: imageUrl || null,
             }
         });
         return NextResponse.json(certificate);

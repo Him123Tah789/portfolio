@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -10,6 +10,11 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,6 +32,10 @@ export default function LoginPage() {
             router.push("/admin");
         }
     };
+
+    if (!mounted) {
+        return <main className="dot-pattern" style={{ minHeight: "100vh" }} suppressHydrationWarning />;
+    }
 
     return (
         <main className="dot-pattern" style={{
@@ -71,7 +80,7 @@ export default function LoginPage() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                placeholder="admin@example.com"
+                                placeholder="himeltahsib2@gmail.com"
                                 style={{
                                     width: "100%",
                                     padding: "12px 16px",
@@ -92,7 +101,7 @@ export default function LoginPage() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                placeholder="••••••••"
+                                placeholder="127Diya"
                                 style={{
                                     width: "100%",
                                     padding: "12px 16px",

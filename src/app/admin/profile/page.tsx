@@ -77,6 +77,7 @@ export default function ProfileAdmin() {
     const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
     const [showCropper, setShowCropper]          = useState(false);
     const [uploading, setUploading]              = useState(false);
+    const [uploadingResume, setUploadingResume]  = useState(false);
     const [dragOver, setDragOver]                = useState(false);
 
     useEffect(() => {
@@ -157,6 +158,34 @@ export default function ProfileAdmin() {
         if (socialLinks.length >= 10) { showToast("error", "Maximum 10 social links allowed."); return; }
         setSocialLinks([...socialLinks, { id: `new-${Date.now()}`, platform: "GitHub", url: "" }]);
     };
+
+    const handleResumeFile = async (file: File) => {
+        if (!file) return;
+        setUploadingResume(true);
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("fileName", `${(profile?.name || "resume").replace(/\s+/g, "_")}_resume`);
+
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (!res.ok) {
+                showToast("error", "Document upload failed.");
+                return;
+            }
+
+            const { url } = await res.json();
+            setProfile((p: any) => ({ ...p, resumeUrl: url }));
+            showToast("success", "Document uploaded successfully.");
+        } catch {
+            showToast("error", "Document upload error.");
+        } finally {
+            setUploadingResume(false);
+        }
+    };
     const handleRemoveLink = (i: number) => setSocialLinks(socialLinks.filter((_, idx) => idx !== i));
     const handleLinkChange = (i: number, field: string, value: string) => {
         const n = [...socialLinks]; n[i][field] = value; setSocialLinks(n);
@@ -179,7 +208,7 @@ export default function ProfileAdmin() {
         const res = await fetch("/api/profile", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...data, avatarUrl: profile?.avatarUrl, socialLinks }),
+            body: JSON.stringify({ ...data, avatarUrl: profile?.avatarUrl, resumeUrl: profile?.resumeUrl, socialLinks }),
         });
         setSaving(false);
         if (res.ok) showToast("success", "Profile saved successfully!");
@@ -316,6 +345,47 @@ export default function ProfileAdmin() {
                     </div>
                     <div style={{ marginBottom: 24 }}>
                         <Field label="Present Address" name="address" defaultValue={profile?.address ?? ""} />
+                    </div>
+                    <div style={{ marginBottom: 24 }}>
+                        <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>Resume / Document</label>
+                        <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+                            <button
+                                type="button"
+                                onClick={() => document.getElementById("resume-input")?.click()}
+                                style={{
+                                    border: "1px solid var(--border)",
+                                    borderRadius: 10,
+                                    background: "var(--bg-section)",
+                                    color: "var(--text-primary)",
+                                    padding: "10px 14px",
+                                    cursor: "pointer",
+                                    fontSize: 13,
+                                    fontWeight: 600,
+                                }}
+                                disabled={uploadingResume}
+                            >
+                                {uploadingResume ? "Uploading..." : "Upload Document"}
+                            </button>
+                            {profile?.resumeUrl ? (
+                                <a href={profile.resumeUrl} target="_blank" rel="noreferrer" style={{ color: "var(--accent)", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>
+                                    View Uploaded File
+                                </a>
+                            ) : (
+                                <span style={{ color: "var(--text-muted)", fontSize: 13 }}>No file uploaded</span>
+                            )}
+                        </div>
+                        <p style={{ marginTop: 8, fontSize: 12, color: "var(--text-muted)" }}>
+                            Supports PDF, DOC, DOCX, ZIP, TXT, images, and most file types (max 20MB).
+                        </p>
+                        <input
+                            id="resume-input"
+                            type="file"
+                            style={{ display: "none" }}
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) void handleResumeFile(file);
+                            }}
+                        />
                     </div>
                     <Field label="Primary Email Address" name="email" type="email" defaultValue={profile?.email ?? ""} />
                 </div>

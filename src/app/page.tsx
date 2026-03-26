@@ -5,6 +5,8 @@ import ThemeToggle from "@/components/ThemeToggle";
 import ProjectCarousel from "@/components/ProjectCarousel";
 import SkillsTicker from "@/components/SkillsTicker";
 
+export const dynamic = "force-dynamic";
+
 async function getProfile() {
   try {
     return await prisma.profile.findFirst({ include: { socialLinks: true } });
@@ -92,6 +94,28 @@ async function getPosts() {
   }
 }
 
+function toValidDate(value: unknown): Date | null {
+  if (!value) return null;
+  const parsed = new Date(value as any);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+}
+
+function formatMonthYear(value: unknown): string {
+  const parsed = toValidDate(value);
+  if (!parsed) return "";
+  return new Intl.DateTimeFormat("en-US", { month: "short", year: "numeric" }).format(parsed);
+}
+
+function formatYear(value: unknown): string {
+  const parsed = toValidDate(value);
+  return parsed ? String(parsed.getFullYear()) : "";
+}
+
+function formatDateGB(value: unknown): string {
+  const parsed = toValidDate(value);
+  return parsed ? parsed.toLocaleDateString("en-GB") : "";
+}
+
 export default async function HomePage() {
   const profile = await getProfile();
   const projects = await getProjects();
@@ -131,13 +155,13 @@ export default async function HomePage() {
         </Link>
 
         <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
-          <Link href="#about" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>About</Link>
-          <Link href="#education" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Education</Link>
-          <Link href="#experience" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Experience</Link>
-          <Link href="#skills" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Skills</Link>
-          <Link href="#projects" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Projects</Link>
-          <Link href="#blog" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Blog</Link>
-          <Link href="#contact" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Contact</Link>
+          <a href="#about" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>About</a>
+          <a href="#education" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Education</a>
+          <a href="#experience" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Experience</a>
+          <a href="#skills" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Skills</a>
+          <a href="#projects" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Projects</a>
+          <a href="#blog" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Blog</a>
+          <a href="#contact" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Contact</a>
           <ThemeToggle />
           <Link href="/login" className="admin-nav-link" style={{
             fontSize: 12, fontWeight: 700, color: "var(--text-muted)",
@@ -150,7 +174,7 @@ export default async function HomePage() {
       </nav>
 
       {/* ── HERO ── */}
-      <section className="dot-pattern" style={{
+      <section className="space-scene" style={{
         position: "relative",
         minHeight: "100vh",
         display: "flex",
@@ -161,14 +185,7 @@ export default async function HomePage() {
         padding: "0 5%",
         overflow: "hidden",
       }}>
-        {/* Glow blobs - massive, dense bouncing screensaver puddles */}
-        <div className="glow-circle" style={{ width: 800, height: 800, background: "rgba(239, 68, 68, 0.2)", filter: "blur(100px)", top: 0, left: 0 }} />
-        <div className="glow-circle" style={{ width: 600, height: 600, background: "rgba(34, 197, 94, 0.25)", filter: "blur(90px)", top: 0, left: 0 }} />
-        <div className="glow-circle" style={{ width: 700, height: 700, background: "rgba(59, 130, 246, 0.2)", filter: "blur(110px)", top: 0, left: 0 }} />
-        <div className="glow-circle" style={{ width: 900, height: 900, background: "rgba(234, 179, 8, 0.2)", filter: "blur(120px)", top: 0, left: 0 }} />
-        <div className="glow-circle" style={{ width: 1000, height: 1000, background: "rgba(168, 85, 247, 0.15)", filter: "blur(140px)", top: 0, left: 0 }} />
-
-        <div className="animate-in" style={{ maxWidth: 760, position: "relative" }}>
+        <div className="animate-in" style={{ maxWidth: 760, position: "relative", zIndex: 2 }}>
           {/* Avatar */}
           {profile?.avatarUrl && (
             <div style={{ display: "flex", justifyContent: "center", marginBottom: 32 }}>
@@ -198,14 +215,14 @@ export default async function HomePage() {
             Available for new opportunities
           </div>
           <h1 style={{ fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 24 }}>
-            Hi, I'm <span className="gradient-text">{profile?.name ?? "Md. Mirazul Hasan"}</span>
+            Hi, I'm <span className="gradient-text">{profile?.name ?? "Faishal Uddin Himel"}</span>
           </h1>
           <p style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", color: "var(--text-muted)", lineHeight: 1.7, marginBottom: 40, maxWidth: 640, margin: "0 auto 40px" }}>
             {profile?.bio ?? "Full Stack Developer crafting clean, scalable, and beautiful web applications with a passion for great user experience."}
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="#projects" className="btn-glow">View My Work</Link>
-            <Link href="#contact" className="btn-outline">Get in Touch</Link>
+            <a href="#projects" className="btn-glow">View My Work</a>
+            <a href="#contact" className="btn-outline">Get in Touch</a>
           </div>
         </div>
       </section>
@@ -359,7 +376,7 @@ export default async function HomePage() {
                     <p style={{ fontSize: "1.1rem", color: "var(--accent)", fontWeight: 700 }}>{exp.company}</p>
                   </div>
                   <div style={{ color: "var(--text-muted)", fontWeight: 700, fontSize: 14 }}>
-                    {new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(new Date(exp.startDate))} — {exp.current ? "Present" : exp.endDate ? new Intl.DateTimeFormat('en-US', { month: 'short', year: 'numeric' }).format(new Date(exp.endDate)) : ""}
+                    {formatMonthYear(exp.startDate)} — {exp.current ? "Present" : formatMonthYear(exp.endDate)}
                   </div>
                 </div>
                 <p style={{ color: "var(--text-muted)", lineHeight: 1.8, fontSize: 15 }}>{exp.description}</p>
@@ -403,11 +420,31 @@ export default async function HomePage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 24 }}>
             {certificates.map((cert: any) => (
               <div key={cert.id} className="glass hover-card" style={{ padding: 24 }}>
+                {cert.imageUrl && (
+                  <div style={{ marginBottom: 14, borderRadius: 12, overflow: "hidden", border: "1px solid var(--border)", background: "var(--bg-section)" }}>
+                    {/(\.png|\.jpg|\.jpeg|\.webp|\.gif)$/i.test(cert.imageUrl) ? (
+                      <img src={cert.imageUrl} alt={`${cert.title} certificate`} style={{ width: "100%", height: 150, objectFit: "cover", display: "block" }} />
+                    ) : (
+                      <div style={{ height: 70, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-muted)", fontSize: 13, fontWeight: 600 }}>
+                        Certificate proof attached
+                      </div>
+                    )}
+                  </div>
+                )}
                 <h3 style={{ fontSize: "1rem", fontWeight: 700, marginBottom: 8 }}>{cert.title}</h3>
                 <p style={{ color: "var(--text-muted)", fontSize: 13, marginBottom: 12 }}>{cert.issuer}</p>
+                {cert.credentialId && (
+                  <p style={{ color: "var(--text-muted)", fontSize: 12, marginBottom: 10 }}>
+                    ID: <span style={{ color: "var(--text-primary)", fontWeight: 600 }}>{cert.credentialId}</span>
+                  </p>
+                )}
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: 12, color: "var(--text-muted)" }}>{cert.issuedAt && new Date(cert.issuedAt).getUTCFullYear() !== 1970 ? new Date(cert.issuedAt).getFullYear() : ""}</span>
-                  {cert.credentialUrl && <a href={cert.credentialUrl} target="_blank" rel="noreferrer" style={{ fontSize: 12, color: "var(--accent)", textDecoration: "none", fontWeight: 600 }}>Verify →</a>}
+                  <span style={{ fontSize: 12, color: "var(--text-muted)" }}>{formatYear(cert.issuedAt) === "1970" ? "" : formatYear(cert.issuedAt)}</span>
+                  {cert.imageUrl && (
+                    <a href={cert.imageUrl} target="_blank" rel="noreferrer" style={{ fontSize: 12, color: "var(--accent)", textDecoration: "none", fontWeight: 700 }}>
+                      View Certificate ↗
+                    </a>
+                  )}
                 </div>
               </div>
             ))}
@@ -430,7 +467,7 @@ export default async function HomePage() {
                   </div>
                   {!pub.submitted && (
                     <p style={{ color: "var(--accent)", fontSize: 14, fontWeight: 600, marginBottom: 16 }}>
-                      {pub.publisher} • {pub.date ? new Date(pub.date).getFullYear() : ""}
+                      {pub.publisher} • {formatYear(pub.date)}
                     </p>
                   )}
                   {pub.submitted && <p style={{ color: "var(--text-muted)", fontSize: 14, fontWeight: 600, marginBottom: 16, fontStyle: "italic" }}>Currently under review</p>}
@@ -471,9 +508,9 @@ export default async function HomePage() {
                         <p style={{ fontSize: 14, color: "var(--accent)", fontWeight: 600, marginBottom: 8 }}>{act.endDate && !act.current ? `Former ${act.role}` : act.role}</p>
                         {(act.startDate || act.endDate || act.current) && (
                           <p style={{ fontSize: 13, color: "var(--text-muted)", fontWeight: 700, marginBottom: 12 }}>
-                            {act.startDate ? new Date(act.startDate).getFullYear() : ""}
+                            {formatYear(act.startDate)}
                             {" — "}
-                            {act.current ? "Present" : act.endDate ? new Date(act.endDate).getFullYear() : ""}
+                            {act.current ? "Present" : formatYear(act.endDate)}
                           </p>
                         )}
                         {act.description && <p style={{ color: "var(--text-muted)", fontSize: 14, lineHeight: 1.6 }}>{act.description}</p>}
@@ -517,7 +554,7 @@ export default async function HomePage() {
             {posts.map((post: any) => (
               <div key={post.id} className="glass hover-card" style={{ padding: 32 }}>
                 <p style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 12, fontWeight: 700 }}>
-                  {new Date(post.createdAt).toLocaleDateString('en-GB')}
+                  {formatDateGB(post.createdAt)}
                 </p>
                 <Link href={`/blog/${post.slug}`} style={{ textDecoration: "none", color: "inherit" }}>
                   <h3 className="blog-card-title">{post.title}</h3>

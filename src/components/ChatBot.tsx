@@ -18,6 +18,7 @@ const QUICK_PROMPTS = [
 const BOT_NAME = "Miraz AI";
 
 export default function ChatBot() {
+  const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -96,8 +97,16 @@ export default function ChatBot() {
   };
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  if (!mounted) {
+    return null;
+  }
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -137,9 +146,9 @@ export default function ChatBot() {
         <div
           className="fixed bottom-24 right-5 z-40 flex h-[560px] w-[380px] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-3xl border animate-in"
           style={{
-            background: "var(--bg-card)",
-            borderColor: "var(--border)",
-            boxShadow: "0 30px 70px rgba(0, 0, 0, 0.35)",
+            background: "var(--chat-shell-bg)",
+            borderColor: "var(--chat-shell-border)",
+            boxShadow: "var(--chat-shell-shadow)",
             backdropFilter: "blur(12px)",
           }}
         >
@@ -148,7 +157,7 @@ export default function ChatBot() {
             className="border-b px-4 py-4"
             style={{
               borderColor: "var(--border)",
-              background: "linear-gradient(135deg, rgba(108,99,255,0.2), rgba(255,101,132,0.12))",
+              background: "var(--chat-header-bg)",
             }}
           >
             <div className="flex items-center justify-between">
@@ -206,7 +215,7 @@ export default function ChatBot() {
                           boxShadow: "0 8px 24px rgba(108, 99, 255, 0.25)",
                         }
                       : {
-                          background: "rgba(148, 163, 184, 0.12)",
+                          background: "var(--chat-assistant-bg)",
                           border: "1px solid var(--border)",
                           color: "var(--text-primary)",
                         }
@@ -232,7 +241,7 @@ export default function ChatBot() {
                 <div
                   className="rounded-2xl rounded-bl-md px-4 py-2.5"
                   style={{
-                    background: "rgba(148, 163, 184, 0.12)",
+                    background: "var(--chat-assistant-bg)",
                     border: "1px solid var(--border)",
                   }}
                 >
@@ -264,7 +273,7 @@ export default function ChatBot() {
                 className="max-h-28 min-h-11 flex-1 resize-none rounded-xl border px-3 py-2.5 text-sm leading-6 outline-none transition"
                 style={{
                   borderColor: "var(--border)",
-                  background: "rgba(148, 163, 184, 0.08)",
+                  background: "var(--chat-input-bg)",
                   color: "var(--text-primary)",
                 }}
               />

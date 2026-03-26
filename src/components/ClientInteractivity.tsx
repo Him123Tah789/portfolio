@@ -24,7 +24,7 @@ export default function ClientInteractivity() {
       };
     });
 
-    let animationId: number;
+    let animationId: number | null = null;
 
     const animatePuddles = () => {
       puddles.forEach(p => {
@@ -61,7 +61,9 @@ export default function ClientInteractivity() {
       animationId = requestAnimationFrame(animatePuddles);
     };
 
-    animationId = requestAnimationFrame(animatePuddles);
+    if (puddles.length > 0) {
+      animationId = requestAnimationFrame(animatePuddles);
+    }
 
     // 2. Scroll Reveal Animations
     const observer = new IntersectionObserver((entries) => {
@@ -82,7 +84,7 @@ export default function ClientInteractivity() {
     });
 
     return () => {
-      cancelAnimationFrame(animationId);
+      if (animationId) cancelAnimationFrame(animationId);
       observer.disconnect();
     };
   }, []);
