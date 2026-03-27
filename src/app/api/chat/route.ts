@@ -751,7 +751,7 @@ ${projectLines}
 
   const systemMessage = {
     role: "system" as const,
-    content: `You are Miraz AI, the portfolio assistant for a software developer's website.
+    content: `You are the portfolio assistant for ${profile?.name || "Faishal Uddin Himel"}, a software developer.
 
 Your goals:
 - Help visitors quickly understand the developer's skills, projects, experience, education, certifications, and contact intent.
