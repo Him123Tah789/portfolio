@@ -4,6 +4,7 @@ import ClientInteractivity from "@/components/ClientInteractivity";
 import ThemeToggle from "@/components/ThemeToggle";
 import ProjectCarousel from "@/components/ProjectCarousel";
 import SkillsTicker from "@/components/SkillsTicker";
+import HomeSwipeNavigator from "@/components/HomeSwipeNavigator";
 
 export const dynamic = "force-dynamic";
 
@@ -87,7 +88,7 @@ async function getPosts() {
     return await prisma.post.findMany({
       where: { published: true },
       orderBy: { createdAt: "desc" },
-      take: 3,
+      take: 8,
     });
   } catch {
     return [];
@@ -127,6 +128,8 @@ export default async function HomePage() {
   const education = await getEducation();
   const experience = await getExperience();
   const posts = await getPosts();
+  const primaryPosts = posts.slice(0, 3);
+  const secondaryPosts = posts.slice(3, 8);
 
   // Group skills by category
   const skillsByCategory = skills.reduce((acc: any, skill: any) => {
@@ -146,9 +149,9 @@ export default async function HomePage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
-        borderBottom: "1px solid var(--border)",
-        background: "var(--bg-nav)",
-        backdropFilter: "blur(12px)",
+        borderBottom: "1px solid transparent",
+        background: "transparent",
+        backdropFilter: "none",
       }}>
         <Link href="/" style={{ fontWeight: 700, fontSize: "1.1rem", textDecoration: "none", color: "inherit" }}>
           {profile?.name ?? "Portfolio"}
@@ -215,12 +218,14 @@ export default async function HomePage() {
             Available for new opportunities
           </div>
           <h1 style={{ fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 24 }}>
-            Hi, I'm <span className="gradient-text">{profile?.name ?? "Faishal Uddin Himel"}</span>
+            Hi, I'm <span className="gradient-text" style={{ whiteSpace: "nowrap", display: "inline-block" }}>{profile?.name ?? "Faishal Uddin Himel"}</span>
           </h1>
-          <p style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", color: "var(--text-muted)", lineHeight: 1.7, marginBottom: 40, maxWidth: 640, margin: "0 auto 40px" }}>
+          <p style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", color: "var(--text-muted)", lineHeight: 2.08, marginBottom: 56, maxWidth: "74ch", margin: "0 auto 56px" }}>
             {profile?.bio ?? "Full Stack Developer crafting clean, scalable, and beautiful web applications with a passion for great user experience."}
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+            <Link href="/projects" className="btn-glow">Projects</Link>
+            <Link href="/research" className="btn-outline">Research</Link>
             <a href="#projects" className="btn-glow">View My Work</a>
             <a href="#contact" className="btn-outline">Get in Touch</a>
           </div>
@@ -551,7 +556,7 @@ export default async function HomePage() {
           <p style={{ color: "var(--accent)", fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>{(profile as any)?.blogSubtitle ?? "Journal"}</p>
           <h2 className="section-title" style={{ marginBottom: 60 }}>{(profile as any)?.blogTitle ?? "Latest Writing"}</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 32 }}>
-            {posts.map((post: any) => (
+            {primaryPosts.map((post: any) => (
               <div key={post.id} className="glass hover-card" style={{ padding: 32 }}>
                 <p style={{ fontSize: 12, color: "var(--text-muted)", marginBottom: 12, fontWeight: 700 }}>
                   {formatDateGB(post.createdAt)}
@@ -566,6 +571,21 @@ export default async function HomePage() {
               </div>
             ))}
           </div>
+
+          {secondaryPosts.length > 0 && (
+            <div className="blog-alt-wrap">
+              <h3>Different Blogs</h3>
+              <div className="blog-alt-list">
+                {secondaryPosts.map((post: any) => (
+                  <Link key={`alt-${post.id}`} href={`/blog/${post.slug}`} className="blog-alt-item">
+                    <span>{formatDateGB(post.createdAt)}</span>
+                    <strong>{post.title}</strong>
+                    <em>{post.content.replace(/[#*`]/g, '').slice(0, 110)}...</em>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
       )}
 
@@ -594,6 +614,7 @@ export default async function HomePage() {
           transition: "color 0.2s", letterSpacing: "0.04em",
         }}>Admin Login →</Link>
       </footer>
+      <HomeSwipeNavigator />
       <ClientInteractivity />
     </main>
   );

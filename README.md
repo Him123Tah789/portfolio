@@ -48,6 +48,37 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
+## 🤖 Local AI Setup (Ollama)
+
+The chat assistant uses Ollama via `src/app/api/chat/route.ts`.
+
+```bash
+# 1) Install/start Ollama app first, then pull model used by default in this repo
+ollama pull llama2
+
+# 2) (Optional) test model directly
+ollama run llama2
+```
+
+Add these variables to `.env.local` (or keep defaults):
+
+```env
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=llama2
+CHAT_MODE=rules
+```
+
+`CHAT_MODE` options:
+- `rules` → Fast dynamic chatbot from your DB content (no LLM required)
+- `ollama` → Always use Ollama
+- `hybrid` → Use DB rules first, fallback to Ollama for unknown questions
+
+For deployment with smaller footprint and faster response, use `CHAT_MODE=rules`.
+
+If chat fails, make sure Ollama is running and the model is pulled.
+
+---
+
 ## 🌐 Deployment (Vercel — recommended)
 
 ### 1. Push to GitHub
