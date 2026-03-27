@@ -99,37 +99,78 @@ const SocialIcon = ({ platform }: { platform: string }) => {
 // ── COMPONENT ──────────────────────────────────────────────────────────────
 export default async function AdminDashboard() {
     // ── DATA FETCHING ────────────────────────────────────────────────────────
-    const profileData = await prisma.profile.findFirst({ include: { socialLinks: true } });
-    const profile = profileData as unknown as Profile | null;
+    let profile: Profile | null = null;
+    let education: Education[] = [];
+    let experience: Experience[] = [];
+    let skills: Skill[] = [];
+    let certificates: Certificate[] = [];
+    let activities: Activity[] = [];
+    let publications: Publication[] = [];
+    let references: Reference[] = [];
 
-    const education = await (prisma as any).education.findMany({ 
-        orderBy: [{ order: "asc" }, { current: "desc" }, { passingYear: "desc" }] 
-    }) as unknown as Education[];
+    try {
+        const profileData = await prisma.profile.findFirst({ include: { socialLinks: true } });
+        profile = profileData as unknown as Profile | null;
+    } catch {
+        profile = null;
+    }
 
-    const experience = await (prisma as any).experience.findMany({ 
-        orderBy: [{ order: "asc" }, { startDate: "desc" }] 
-    }) as unknown as Experience[];
+    try {
+        education = await (prisma as any).education.findMany({
+            orderBy: [{ order: "asc" }, { current: "desc" }, { passingYear: "desc" }]
+        }) as unknown as Education[];
+    } catch {
+        education = [];
+    }
 
-    const skills = await (prisma as any).skill.findMany({ 
-        orderBy: [{ order: "asc" }, { level: "desc" }] 
-    }) as unknown as Skill[];
+    try {
+        experience = await (prisma as any).experience.findMany({
+            orderBy: [{ order: "asc" }, { startDate: "desc" }]
+        }) as unknown as Experience[];
+    } catch {
+        experience = [];
+    }
 
-    const certificates = await (prisma as any).certificate.findMany({ 
-        orderBy: [{ order: "asc" }, { issuedAt: "desc" }], 
-        take: 6 
-    }) as unknown as Certificate[];
+    try {
+        skills = await (prisma as any).skill.findMany({
+            orderBy: [{ order: "asc" }, { level: "desc" }]
+        }) as unknown as Skill[];
+    } catch {
+        skills = [];
+    }
 
-    const activities = await (prisma as any).activity.findMany({
-        orderBy: [{ order: "asc" }, { startDate: "desc" }]
-    }) as Activity[];
+    try {
+        certificates = await (prisma as any).certificate.findMany({
+            orderBy: [{ order: "asc" }, { issuedAt: "desc" }],
+            take: 6
+        }) as unknown as Certificate[];
+    } catch {
+        certificates = [];
+    }
 
-    const publications = await (prisma as any).publication.findMany({
-        orderBy: [{ order: "asc" }, { date: "desc" }]
-    }) as Publication[];
+    try {
+        activities = await (prisma as any).activity.findMany({
+            orderBy: [{ order: "asc" }, { startDate: "desc" }]
+        }) as Activity[];
+    } catch {
+        activities = [];
+    }
 
-    const references = await (prisma as any).reference.findMany({
-        orderBy: [{ order: "asc" }, { createdAt: "asc" }]
-    }) as Reference[];
+    try {
+        publications = await (prisma as any).publication.findMany({
+            orderBy: [{ order: "asc" }, { date: "desc" }]
+        }) as Publication[];
+    } catch {
+        publications = [];
+    }
+
+    try {
+        references = await (prisma as any).reference.findMany({
+            orderBy: [{ order: "asc" }, { createdAt: "asc" }]
+        }) as Reference[];
+    } catch {
+        references = [];
+    }
 
     const adminCards = [
         { title: "About",        href: "/admin/profile",      icon: "👤" },
