@@ -1,0 +1,22 @@
+diff --git a/node_modules/next-auth/src/next/index.ts b/node_modules/next-auth/src/next/index.ts
+index fc276a1..120700b 100644
+--- a/node_modules/next-auth/src/next/index.ts
++++ b/node_modules/next-auth/src/next/index.ts
+@@ -86,7 +86,7 @@ async function NextAuthRouteHandler(
+       body,
+       query,
+       cookies: Object.fromEntries(
+-        (await cookies()).getAll().map((c) => [c.name, c.value])
++        (await cookies()).getAll().map((c: { name: string; value: string }) => [c.name, c.value])
+       ),
+       headers: Object.fromEntries((await headers()) as Headers),
+       method: req.method,
+@@ -191,7 +191,7 @@ export async function getServerSession<
+     req = {
+       headers: Object.fromEntries((await headers()) as Headers),
+       cookies: Object.fromEntries(
+-        (await cookies()).getAll().map((c) => [c.name, c.value])
++        (await cookies()).getAll().map((c: { name: string; value: string }) => [c.name, c.value])
+       ),
+     }
+     res = { getHeader() {}, setCookie() {}, setHeader() {} }
