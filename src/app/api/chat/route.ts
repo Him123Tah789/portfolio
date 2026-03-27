@@ -16,8 +16,11 @@ type ChatResult = {
 };
 type SearchDocument = { label: string; text: string; answer: string };
 type CachedChatResult = ChatResult & { createdAt: number };
+type RateLimitEntry = { count: number; windowStart: number };
 
 const chatResponseCache = new Map<string, CachedChatResult>();
+const chatRateLimitStore = new Map<string, RateLimitEntry>();
+const RULES_NO_MATCH_MESSAGE = "I could not find this information in the current profile data.";
 
 type Intent =
   | "greeting"
@@ -265,8 +268,80 @@ function getCacheConfig() {
   };
 }
 
-function getCacheKey(question: string) {
-  return normalizeText(question).replace(/\s+/g, " ");
+function getRateLimitConfig() {
+  return {
+    windowMs: Number(process.env.CHAT_RATE_LIMIT_WINDOW_MS || 60000),
+    maxRequests: Number(process.env.CHAT_RATE_LIMIT_MAX || 20),
+  };
+}
+
+function getClientIp(req: NextRequest) {
+  const forwarded = req.headers.get("x-forwarded-for");
+  if (forwarded) {
+    return forwarded.split(",")[0].trim();
+  }
+
+  const realIp = req.headers.get("x-real-ip");
+  if (realIp) {
+    return realIp.trim();
+  }
+
+  const cfIp = req.headers.get("cf-connecting-ip");
+  if (cfIp) {
+    return cfIp.trim();
+  }
+
+  return "unknown";
+}
+
+function consumeRateLimit(ip: string) {
+  const { windowMs, maxRequests } = getRateLimitConfig();
+  const now = Date.now();
+  const existing = chatRateLimitStore.get(ip);
+
+  if (!existing || now - existing.windowStart >= windowMs) {
+    chatRateLimitStore.set(ip, { count: 1, windowStart: now });
+    return {
+      allowed: true,
+      limit: maxRequests,
+      remaining: Math.max(0, maxRequests - 1),
+      resetMs: windowMs,
+    };
+  }
+
+  existing.count += 1;
+  chatRateLimitStore.set(ip, existing);
+
+  const remaining = Math.max(0, maxRequests - existing.count);
+  const resetMs = Math.max(0, windowMs - (now - existing.windowStart));
+  const allowed = existing.count <= maxRequests;
+
+  return { allowed, limit: maxRequests, remaining, resetMs };
+}
+
+function pruneRateLimitStoreIfNeeded() {
+  if (chatRateLimitStore.size <= 5000) return;
+
+  const now = Date.now();
+  const { windowMs } = getRateLimitConfig();
+
+  for (const [ip, entry] of chatRateLimitStore.entries()) {
+    if (now - entry.windowStart > windowMs * 2) {
+      chatRateLimitStore.delete(ip);
+    }
+  }
+}
+
+function getChatMode(): ChatMode {
+  const mode = normalizeText(process.env.CHAT_MODE || "rules");
+  if (mode === "ollama" || mode === "hybrid" || mode === "rules") {
+    return mode;
+  }
+  return "rules";
+}
+
+function getCacheKey(question: string, mode: ChatMode) {
+  return `${mode}:${normalizeText(question).replace(/\s+/g, " ")}`;
 }
 
 function getCachedResponse(cacheKey: string): ChatResult | null {
@@ -545,9 +620,40 @@ async function buildRulesResponse(question: string): Promise<ChatResult> {
   }
 
   return {
-    message: "I could not find this information in the current profile data.",
+    message: RULES_NO_MATCH_MESSAGE,
     source: "rules",
   };
+}
+
+function getOllamaBaseUrl() {
+  const configured = (process.env.OLLAMA_BASE_URL || "").trim();
+
+  if (configured) {
+    return configured.replace(/\/+$/, "");
+  }
+
+  if (process.env.NODE_ENV !== "production") {
+    return "http://localhost:11434";
+  }
+
+  throw new Error("OLLAMA_BASE_URL is required in production when CHAT_MODE uses Ollama.");
+}
+
+function getOllamaHeaders() {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  const apiKey = (process.env.OLLAMA_API_KEY || "").trim();
+  if (!apiKey) {
+    return headers;
+  }
+
+  const apiKeyHeader = (process.env.OLLAMA_API_KEY_HEADER || "Authorization").trim();
+  const apiKeyPrefix = (process.env.OLLAMA_API_KEY_PREFIX || "Bearer").trim();
+
+  headers[apiKeyHeader] = apiKeyPrefix ? `${apiKeyPrefix} ${apiKey}` : apiKey;
+  return headers;
 }
 
 async function askOllamaWithModel(
@@ -558,7 +664,7 @@ async function askOllamaWithModel(
   numCtx: number,
   temperature: number
 ): Promise<ChatResult> {
-  const baseUrl = process.env.OLLAMA_BASE_URL || "http://localhost:11434";
+  const baseUrl = getOllamaBaseUrl();
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
@@ -567,9 +673,7 @@ async function askOllamaWithModel(
   try {
     const response = await fetch(`${baseUrl}/api/chat`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: getOllamaHeaders(),
       signal: controller.signal,
       body: JSON.stringify({
         model: model,
@@ -697,6 +801,27 @@ Tone:
 
 export async function POST(req: NextRequest) {
   try {
+    const clientIp = getClientIp(req);
+    const rateLimit = consumeRateLimit(clientIp);
+    pruneRateLimitStoreIfNeeded();
+
+    if (!rateLimit.allowed) {
+      return NextResponse.json(
+        {
+          error: "Too many chat requests. Please wait a moment and try again.",
+        },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": String(Math.ceil(rateLimit.resetMs / 1000)),
+            "X-RateLimit-Limit": String(rateLimit.limit),
+            "X-RateLimit-Remaining": String(rateLimit.remaining),
+            "X-RateLimit-Reset": String(Math.ceil(rateLimit.resetMs / 1000)),
+          },
+        }
+      );
+    }
+
     const { messages } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
@@ -706,8 +831,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const chatMode = getChatMode();
     const userQuestion = getLastUserQuestion(messages as Array<{ role?: string; content?: string }>);
-    const cacheKey = getCacheKey(userQuestion);
+    const cacheKey = getCacheKey(userQuestion, chatMode);
     const cached = getCachedResponse(cacheKey);
 
     if (cached) {
@@ -720,7 +846,29 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const result = await askOllama(messages as OllamaMessage[]);
+    let result: ChatResult;
+
+    if (chatMode === "rules") {
+      result = await buildRulesResponse(userQuestion);
+    } else if (chatMode === "ollama") {
+      result = await askOllama(messages as OllamaMessage[]);
+    } else {
+      const rulesResult = await buildRulesResponse(userQuestion);
+      if (rulesResult.message !== RULES_NO_MATCH_MESSAGE) {
+        result = rulesResult;
+      } else {
+        try {
+          result = await askOllama(messages as OllamaMessage[]);
+        } catch (ollamaError) {
+          console.warn("Hybrid chat fallback failed; returning rules result", ollamaError);
+          result = {
+            ...rulesResult,
+            message: `${rulesResult.message}\nAI fallback is currently unavailable.`,
+          };
+        }
+      }
+    }
+
     setCachedResponse(cacheKey, result);
 
     return NextResponse.json({

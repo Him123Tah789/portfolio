@@ -63,9 +63,10 @@ ollama run llama2
 Add these variables to `.env.local` (or keep defaults):
 
 ```env
-OLLAMA_BASE_URL=http://localhost:11434
-OLLAMA_MODEL=llama2
 CHAT_MODE=rules
+OLLAMA_BASE_URL=http://localhost:11434
+OLLAMA_MODEL=llama3.2:1b
+OLLAMA_FALLBACK_MODEL=tinyllama:latest
 ```
 
 `CHAT_MODE` options:
@@ -74,6 +75,51 @@ CHAT_MODE=rules
 - `hybrid` → Use DB rules first, fallback to Ollama for unknown questions
 
 For deployment with smaller footprint and faster response, use `CHAT_MODE=rules`.
+
+### Use Ollama after deploying to Vercel
+
+Vercel cannot host Ollama directly. Run Ollama on another server (VPS, GPU VM, or reverse-proxy service) and point your Vercel backend to it.
+
+Set these Environment Variables in Vercel:
+
+```env
+CHAT_MODE=ollama
+OLLAMA_BASE_URL=https://your-ollama-host.example.com
+OLLAMA_MODEL=llama3.2:1b
+OLLAMA_FALLBACK_MODEL=tinyllama:latest
+OLLAMA_TIMEOUT_MS=20000
+
+# Optional if your Ollama endpoint is protected
+OLLAMA_API_KEY=your-secret-token
+OLLAMA_API_KEY_HEADER=Authorization
+OLLAMA_API_KEY_PREFIX=Bearer
+
+# API protection (chat endpoint on your app)
+CHAT_RATE_LIMIT_WINDOW_MS=60000
+CHAT_RATE_LIMIT_MAX=20
+```
+
+Hybrid mode example (rules first, Ollama fallback):
+
+```env
+CHAT_MODE=hybrid
+OLLAMA_BASE_URL=https://your-ollama-host.example.com
+```
+
+If `CHAT_MODE=rules`, Ollama variables are not required in production.
+
+### Harden remote Ollama endpoint (recommended)
+
+1. Keep Ollama bound to localhost on the host machine (`127.0.0.1:11434`).
+2. Put Nginx in front of Ollama with TLS and token protection.
+3. Use the sample config in `deploy/nginx/ollama-proxy.conf`.
+4. Replace these values before applying:
+  - `ollama.example.com`
+  - certificate paths
+  - `Bearer REPLACE_WITH_STRONG_TOKEN`
+5. Set the same token in Vercel as `OLLAMA_API_KEY`.
+
+This way, your public site calls Vercel API routes, Vercel calls your protected proxy, and only then proxy reaches local Ollama.
 
 If chat fails, make sure Ollama is running and the model is pulled.
 
