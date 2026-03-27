@@ -52,13 +52,25 @@ async function getCertificates() {
 }
 
 async function getActivities() {
-  try { return (prisma as any).activity.findMany({ orderBy: [{ order: "asc" }, { startDate: "desc" }] }); } catch { return []; }
+  try {
+    return await (prisma as any).activity.findMany({ orderBy: [{ order: "asc" }, { startDate: "desc" }] });
+  } catch {
+    return [];
+  }
 }
 async function getPublications() {
-  try { return (prisma as any).publication.findMany({ orderBy: [{ order: "asc" }, { date: "desc" }] }); } catch { return []; }
+  try {
+    return await (prisma as any).publication.findMany({ orderBy: [{ order: "asc" }, { date: "desc" }] });
+  } catch {
+    return [];
+  }
 }
 async function getReferences() {
-  try { return (prisma as any).reference.findMany({ orderBy: [{ order: "asc" }, { createdAt: "asc" }] }); } catch { return []; }
+  try {
+    return await (prisma as any).reference.findMany({ orderBy: [{ order: "asc" }, { createdAt: "asc" }] });
+  } catch {
+    return [];
+  }
 }
 
 async function getEducation() {
