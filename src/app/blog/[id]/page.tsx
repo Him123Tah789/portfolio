@@ -10,15 +10,20 @@ interface PostPageProps {
 
 export default async function PostPage({ params }: PostPageProps) {
   const { id } = await params;
-  
-  const post = await prisma.post.findFirst({
-    where: {
-      OR: [
-        { id: id },
-        { slug: id }
-      ]
-    },
-  });
+
+  let post: Awaited<ReturnType<typeof prisma.post.findFirst>> = null;
+  try {
+    post = await prisma.post.findFirst({
+      where: {
+        OR: [
+          { id: id },
+          { slug: id }
+        ]
+      },
+    });
+  } catch {
+    post = null;
+  }
 
   if (!post || !post.published) {
     notFound();
