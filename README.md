@@ -151,19 +151,13 @@ git push -u origin main
 
 3. Click **Deploy** ✅
 
-> **Note:** The default `dev.db` is a local SQLite file and is intentionally excluded from Git.  
-> For production, provision a **PostgreSQL** database (Neon is free) and update `DATABASE_URL` and the `datasource` provider in `prisma/schema.prisma` to `postgresql`.
+> **Note:** This project uses **PostgreSQL** datasource by default in Prisma.  
+> Set a valid PostgreSQL `DATABASE_URL` in Vercel (Neon/Railway/Supabase all work).
 
-### Switching from SQLite → PostgreSQL for production
+### Apply schema on your PostgreSQL database
 
-1. In `prisma/schema.prisma` change the datasource:
-```prisma
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-```
-2. Run `npx prisma db push` (or `migrate deploy`) on the production DB.
+1. Ensure `DATABASE_URL` points to your PostgreSQL instance.
+2. Run `npx prisma db push` (or `migrate deploy`) against that database.
 
 ---
 
@@ -191,7 +185,7 @@ my-portfolio/
 |---|---|
 | Framework | Next.js 16 (App Router) |
 | Language | TypeScript |
-| Database | SQLite (dev) / PostgreSQL (prod) |
+| Database | PostgreSQL |
 | ORM | Prisma |
 | Auth | NextAuth.js |
 | Styling | Vanilla CSS + CSS Variables |
