@@ -80,7 +80,7 @@ export default function LoginPage() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                placeholder="himeltahsib2@gmail.com"
+                                placeholder=""
                                 style={{
                                     width: "100%",
                                     padding: "12px 16px",
@@ -101,7 +101,7 @@ export default function LoginPage() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                placeholder="127Diya"
+                                placeholder=""
                                 style={{
                                     width: "100%",
                                     padding: "12px 16px",
