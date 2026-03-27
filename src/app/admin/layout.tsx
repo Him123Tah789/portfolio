@@ -1,6 +1,8 @@
 import { Sidebar } from "@/components/admin/Sidebar";
 import ClientInteractivity from "@/components/ClientInteractivity";
 
+export const dynamic = "force-dynamic";
+
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     return (
         <div style={{
