@@ -242,12 +242,6 @@ export default function SpaceScene() {
       }
     };
 
-    const handleScroll = () => {
-      const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-      const next = window.scrollY / maxScroll;
-      scrollProgressRef.current = Math.min(1, Math.max(0, next));
-    };
-
     const handleMouseMove = (event: MouseEvent) => {
       const normalizedX = (event.clientX / window.innerWidth) * 2 - 1;
       const normalizedY = (event.clientY / window.innerHeight) * 2 - 1;
@@ -256,16 +250,13 @@ export default function SpaceScene() {
     };
 
     window.addEventListener("resize", handleResize);
-    window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    handleScroll();
     animate();
 
     return () => {
       cancelAnimationFrame(frameRef.current);
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
 

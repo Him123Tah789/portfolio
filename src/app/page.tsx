@@ -415,8 +415,9 @@ export default async function HomePage() {
       )}
 
       {/* ── PROJECTS ── */}
-      <section id="projects" className="reveal" style={{ padding: "100px 5%", background: "linear-gradient(to bottom, transparent, var(--bg-section), transparent)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <section id="projects" className="reveal home-projects-section" style={{ padding: "100px 5%", background: "linear-gradient(to bottom, transparent, var(--bg-section), transparent)", position: "relative", overflow: "hidden" }}>
+        <div className="home-projects-bg" aria-hidden />
+        <div style={{ maxWidth: 1200, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <p style={{ color: "var(--accent)", fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 12 }}>{(profile as any)?.projectsSubtitle ?? "Portfolio"}</p>
           <h2 className="section-title" style={{ marginBottom: 60 }}>{(profile as any)?.projectsTitle ?? "Featured Projects"}</h2>
           {projects.length === 0 ? (
