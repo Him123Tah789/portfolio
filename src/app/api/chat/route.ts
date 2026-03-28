@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/db";
 
-interface OllamaMessage {
+interface AiMessage {
   role: "system" | "user" | "assistant";
   content: string;
 }
 
-type ChatMode = "rules" | "ollama" | "hybrid";
-type ChatSource = "rules" | "ollama";
+type ChatMode = "rules" | "openai" | "hybrid";
+type ChatSource = "rules" | "openai";
 type ChatResult = {
   message: string;
   source: ChatSource;
@@ -334,7 +334,7 @@ function pruneRateLimitStoreIfNeeded() {
 
 function getChatMode(): ChatMode {
   const mode = normalizeText(process.env.CHAT_MODE || "rules");
-  if (mode === "ollama" || mode === "hybrid" || mode === "rules") {
+  if (mode === "openai" || mode === "hybrid" || mode === "rules") {
     return mode;
   }
   return "rules";
@@ -625,81 +625,68 @@ async function buildRulesResponse(question: string): Promise<ChatResult> {
   };
 }
 
-function getOllamaBaseUrl() {
-  const configured = (process.env.OLLAMA_BASE_URL || "").trim();
-
-  if (configured) {
-    return configured.replace(/\/+$/, "");
-  }
-
-  if (process.env.NODE_ENV !== "production") {
-    return "http://localhost:11434";
-  }
-
-  throw new Error("OLLAMA_BASE_URL is required in production when CHAT_MODE uses Ollama.");
+function getOpenAIBaseUrl() {
+  const configured = (process.env.OPENAI_BASE_URL || "").trim();
+  return (configured || "https://api.openai.com/v1").replace(/\/+$/, "");
 }
 
-function getOllamaHeaders() {
+function getOpenAIHeaders() {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
   };
 
-  const apiKey = (process.env.OLLAMA_API_KEY || "").trim();
+  const apiKey = (process.env.OPENAI_API_KEY || "").trim();
   if (!apiKey) {
-    return headers;
+    throw new Error("OPENAI_API_KEY is required when CHAT_MODE is openai or hybrid fallback is used.");
   }
 
-  const apiKeyHeader = (process.env.OLLAMA_API_KEY_HEADER || "Authorization").trim();
-  const apiKeyPrefix = (process.env.OLLAMA_API_KEY_PREFIX || "Bearer").trim();
+  const apiKeyHeader = (process.env.OPENAI_API_KEY_HEADER || "Authorization").trim();
+  const apiKeyPrefix = (process.env.OPENAI_API_KEY_PREFIX || "Bearer").trim();
 
   headers[apiKeyHeader] = apiKeyPrefix ? `${apiKeyPrefix} ${apiKey}` : apiKey;
   return headers;
 }
 
-async function askOllamaWithModel(
-  messages: OllamaMessage[],
+async function askOpenAIWithModel(
+  messages: AiMessage[],
   model: string,
   timeoutMs: number,
-  numPredict: number,
-  numCtx: number,
+  maxTokens: number,
   temperature: number
 ): Promise<ChatResult> {
-  const baseUrl = getOllamaBaseUrl();
+  const baseUrl = getOpenAIBaseUrl();
 
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
-  const recentMessages = messages.slice(-6);
+  const recentMessages = messages.slice(-10);
 
   try {
-    const response = await fetch(`${baseUrl}/api/chat`, {
+    const response = await fetch(`${baseUrl}/chat/completions`, {
       method: "POST",
-      headers: getOllamaHeaders(),
+      headers: getOpenAIHeaders(),
       signal: controller.signal,
       body: JSON.stringify({
         model: model,
         messages: recentMessages,
-        stream: false,
-        options: {
-          num_predict: numPredict,
-          num_ctx: numCtx,
-          temperature,
-        },
+        temperature,
+        max_tokens: maxTokens,
       }),
     });
 
     if (!response.ok) {
-      throw new Error(`Ollama API error: ${response.status}`);
+      const errorText = await response.text();
+      throw new Error(`OpenAI API error: ${response.status} ${errorText}`);
     }
 
     const data = await response.json();
-    const assistantMessage = data.message?.content || "I couldn't generate a response.";
-    return { message: assistantMessage, source: "ollama", modelUsed: model, fellBack: false };
+    const assistantMessage = data.choices?.[0]?.message?.content || "I couldn't generate a response.";
+    return { message: assistantMessage, source: "openai", modelUsed: model, fellBack: false };
   } finally {
     clearTimeout(timeout);
   }
 }
 
-async function askOllama(messages: OllamaMessage[]): Promise<ChatResult> {
+async function askOpenAI(messages: AiMessage[]): Promise<ChatResult> {
   const [profile, skills, experiences, projects] = await Promise.all([
     prisma.profile.findFirst(),
     prisma.skill.findMany({ orderBy: [{ level: "desc" }, { order: "asc" }], take: 8 }),
@@ -742,12 +729,11 @@ FEATURED PROJECTS
 ${projectLines}
 `.trim();
 
-  const model = process.env.OLLAMA_MODEL || "llama3.2:1b";
-  const fallbackModel = process.env.OLLAMA_FALLBACK_MODEL || "tinyllama:latest";
-  const timeoutMs = Number(process.env.OLLAMA_TIMEOUT_MS || 20000);
-  const numPredict = Number(process.env.OLLAMA_NUM_PREDICT || 140);
-  const numCtx = Number(process.env.OLLAMA_NUM_CTX || 2048);
-  const temperature = Number(process.env.OLLAMA_TEMPERATURE || 0.3);
+  const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
+  const fallbackModel = process.env.OPENAI_FALLBACK_MODEL || "gpt-4.1-mini";
+  const timeoutMs = Number(process.env.OPENAI_TIMEOUT_MS || 30000);
+  const maxTokens = Number(process.env.OPENAI_MAX_TOKENS || 350);
+  const temperature = Number(process.env.OPENAI_TEMPERATURE || 0.3);
 
   const systemMessage = {
     role: "system" as const,
@@ -776,10 +762,10 @@ Tone:
 - Avoid fluff and repetitive phrases.`,
   };
 
-  const payload = [systemMessage, ...messages] as OllamaMessage[];
+  const payload = [systemMessage, ...messages] as AiMessage[];
 
   try {
-    const primaryResult = await askOllamaWithModel(payload, model, timeoutMs, numPredict, numCtx, temperature);
+    const primaryResult = await askOpenAIWithModel(payload, model, timeoutMs, maxTokens, temperature);
     return { ...primaryResult, fellBack: false };
   } catch (error) {
     const isTimeout = error instanceof Error && error.name === "AbortError";
@@ -787,12 +773,11 @@ Tone:
       throw error;
     }
 
-    const fallbackResult = await askOllamaWithModel(
+    const fallbackResult = await askOpenAIWithModel(
       payload,
       fallbackModel,
       timeoutMs,
-      Math.max(96, Math.floor(numPredict * 0.8)),
-      Math.max(1024, Math.floor(numCtx * 0.75)),
+      Math.max(180, Math.floor(maxTokens * 0.8)),
       temperature
     );
     return { ...fallbackResult, fellBack: true };
@@ -850,17 +835,17 @@ export async function POST(req: NextRequest) {
 
     if (chatMode === "rules") {
       result = await buildRulesResponse(userQuestion);
-    } else if (chatMode === "ollama") {
-      result = await askOllama(messages as OllamaMessage[]);
+    } else if (chatMode === "openai") {
+      result = await askOpenAI(messages as AiMessage[]);
     } else {
       const rulesResult = await buildRulesResponse(userQuestion);
       if (rulesResult.message !== RULES_NO_MATCH_MESSAGE) {
         result = rulesResult;
       } else {
         try {
-          result = await askOllama(messages as OllamaMessage[]);
-        } catch (ollamaError) {
-          console.warn("Hybrid chat fallback failed; returning rules result", ollamaError);
+          result = await askOpenAI(messages as AiMessage[]);
+        } catch (openAiError) {
+          console.warn("Hybrid chat fallback failed; returning rules result", openAiError);
           result = {
             ...rulesResult,
             message: `${rulesResult.message}\nAI fallback is currently unavailable.`,
