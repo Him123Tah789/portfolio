@@ -4,13 +4,11 @@ import { getToken } from "next-auth/jwt";
 
 export async function proxy(req: NextRequest) {
   const secret = process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET;
-  const token = await getToken({
-    req,
-    secret,
-    // In production HTTPS, NextAuth stores JWT in secure cookie names.
-    // Explicitly enabling secure cookie handling prevents false unauthenticated redirects.
-    secureCookie: req.nextUrl.protocol === "https:",
-  });
+  // Try both secure and non-secure cookie names because edge/proxy protocol
+  // detection can differ between local and hosted environments.
+  const token =
+    (await getToken({ req, secret, secureCookie: true })) ??
+    (await getToken({ req, secret, secureCookie: false }));
   const isAuth = !!token;
   const isAuthPage = req.nextUrl.pathname.startsWith("/login");
 
