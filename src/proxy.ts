@@ -19,17 +19,9 @@ export async function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
-  if (!isAuth && req.nextUrl.pathname.startsWith("/admin")) {
-    let from = req.nextUrl.pathname;
-    if (req.nextUrl.search) {
-      from += req.nextUrl.search;
-    }
-    return NextResponse.redirect(new URL(`/login?from=${encodeURIComponent(from)}`, req.url));
-  }
-
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/login"],
+  matcher: ["/login"],
 };

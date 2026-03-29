@@ -1,9 +1,18 @@
 import { Sidebar } from "@/components/admin/Sidebar";
 import ClientInteractivity from "@/components/ClientInteractivity";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export const dynamic = "force-dynamic";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user) {
+        redirect("/login?from=%2Fadmin");
+    }
+
     return (
         <div style={{
             display: "flex",
