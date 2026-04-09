@@ -98,6 +98,20 @@ If `CHAT_MODE=rules`, OpenAI variables are not required in production.
 
 ---
 
+## 📦 File Upload Storage (Vercel Blob)
+
+Avatar and CV uploads use **Vercel Blob** for persistent storage on production.
+
+Add this variable to `.env.local` for local testing:
+
+```env
+BLOB_READ_WRITE_TOKEN=your_vercel_blob_read_write_token
+```
+
+Add the same variable in Vercel Project Settings -> Environment Variables.
+
+---
+
 ## 🌐 Deployment (Vercel — recommended)
 
 ### 1. Push to GitHub
@@ -121,6 +135,7 @@ git push -u origin main
 | `DATABASE_URL` | Your production DB connection string (e.g. Railway / Neon PostgreSQL) |
 | `NEXTAUTH_SECRET` | A secure random string (`openssl rand -base64 32`) |
 | `NEXTAUTH_URL` | Your Vercel deployment URL, e.g. `https://your-portfolio.vercel.app` |
+| `BLOB_READ_WRITE_TOKEN` | Vercel Blob Read/Write token for avatar and CV uploads |
 
 3. Click **Deploy** ✅
 

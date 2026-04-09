@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
-import { mkdir, writeFile } from "fs/promises";
-import { extname, join } from "path";
+import { put } from "@vercel/blob";
+import { extname } from "path";
 
 function sanitizeFileName(input: string) {
     return input
@@ -34,9 +34,6 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        const uploadDir = join(process.cwd(), "public", "uploads");
-        await mkdir(uploadDir, { recursive: true });
-
         const contentType = req.headers.get("content-type") || "";
 
         if (contentType.includes("multipart/form-data")) {
@@ -56,15 +53,18 @@ export async function POST(req: Request) {
             const originalExt = extname(file.name || "");
             const ext = originalExt || extensionFromMime(file.type || "");
             const baseName = customNameRaw ? sanitizeFileName(customNameRaw) : sanitizeFileName((file.name || "upload").replace(/\.[^/.]+$/, ""));
-            const fileName = `${Date.now()}_${baseName}${ext}`;
+            const uploadPath = `uploads/${baseName}${ext}`;
 
-            const bytes = await file.arrayBuffer();
-            const buffer = Buffer.from(bytes);
-            const path = join(uploadDir, fileName);
-            await writeFile(path, buffer);
+            const blob = await put(uploadPath, file, {
+                access: "public",
+                addRandomSuffix: true,
+                contentType: file.type || undefined,
+            });
+
+            const fileName = blob.pathname.split("/").pop() || blob.pathname;
 
             return NextResponse.json({
-                url: `/uploads/${fileName}`,
+                url: blob.url,
                 fileName,
                 originalName: file.name,
                 size: file.size,
@@ -87,13 +87,23 @@ export async function POST(req: Request) {
         const rawName = fileName ? sanitizeFileName(String(fileName)) : `avatar_${Date.now()}`;
         const ext = extname(rawName) || extensionFromMime(mime);
         const normalizedName = extname(rawName) ? rawName : `${rawName}${ext}`;
+        const uploadPath = `uploads/${normalizedName}`;
 
-        const path = join(uploadDir, normalizedName);
-        await writeFile(path, buffer);
+        const blob = await put(uploadPath, new Blob([buffer], { type: mime }), {
+            access: "public",
+            addRandomSuffix: true,
+            contentType: mime,
+        });
 
-        return NextResponse.json({ url: `/uploads/${normalizedName}`, fileName: normalizedName });
+        const savedName = blob.pathname.split("/").pop() || blob.pathname;
+
+        return NextResponse.json({ url: blob.url, fileName: savedName });
     } catch (error) {
         console.error("Upload error:", error);
+        const message = error instanceof Error ? error.message : "Upload failed";
+        if (message.includes("BLOB_READ_WRITE_TOKEN")) {
+            return NextResponse.json({ error: "Blob storage is not configured" }, { status: 500 });
+        }
         return NextResponse.json({ error: "Upload failed" }, { status: 500 });
     }
 }
