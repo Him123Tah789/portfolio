@@ -247,7 +247,7 @@ export default async function HomePage() {
           <p style={{ fontSize: "clamp(1.12rem, 2.4vw, 1.48rem)", color: "var(--text-muted)", lineHeight: 1.84, marginBottom: 40, maxWidth: "68ch", textWrap: "pretty" as any }}>
             {profile?.bio ?? "Full Stack Developer crafting clean, scalable, and beautiful web applications with a passion for great user experience."}
           </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "flex-start", flexWrap: "wrap", alignItems: "center", width: "100%", maxWidth: 760 }}>
+          <div style={{ display: "flex", gap: 12, justifyContent: "flex-start", flexWrap: "wrap", alignItems: "center", width: "100%", maxWidth: 760 }}>
             <Link href="/projects" className="btn-glow">Projects</Link>
             <Link href="/research" className="btn-outline">Research</Link>
             <a href="#contact" className="btn-outline">Get in Touch</a>
