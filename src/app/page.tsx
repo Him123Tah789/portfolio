@@ -241,10 +241,10 @@ export default async function HomePage() {
           }}>
             Available for new opportunities
           </div>
-          <h1 style={{ fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 24 }}>
-            Hi, I'm <span className="gradient-text" style={{ whiteSpace: "nowrap", display: "inline-block" }}>{profile?.name ?? "Faishal Uddin Himel"}</span>
+          <h1 style={{ fontSize: "clamp(2.6rem, 7vw, 5.6rem)", fontWeight: 900, lineHeight: 1.04, letterSpacing: "-0.04em", marginBottom: 24, maxWidth: "14ch", textWrap: "balance" as any, overflowWrap: "anywhere" }}>
+            Hi, I'm <span className="gradient-text" style={{ display: "inline" }}>{profile?.name ?? "Faishal Uddin Himel"}</span>
           </h1>
-          <p style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", color: "var(--text-muted)", lineHeight: 2.08, marginBottom: 44, maxWidth: "74ch" }}>
+          <p style={{ fontSize: "clamp(1rem, 2.1vw, 1.32rem)", color: "var(--text-muted)", lineHeight: 1.72, marginBottom: 40, maxWidth: "58ch", textWrap: "pretty" as any }}>
             {profile?.bio ?? "Full Stack Developer crafting clean, scalable, and beautiful web applications with a passion for great user experience."}
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "flex-start", flexWrap: "wrap" }}>
@@ -275,7 +275,7 @@ export default async function HomePage() {
               }}>
                 <div style={{ width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden", background: "var(--avatar-bg)" }}>
                   {avatarDisplayUrl ? (
-                    <img src={avatarDisplayUrl} alt={profile?.name || "Profile"} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    <img src={avatarDisplayUrl} alt="Profile photo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   ) : (
                     <div style={{
                       width: "100%",
@@ -412,7 +412,7 @@ export default async function HomePage() {
                   boxShadow: "0 0 24px rgba(108,99,255,0.4)",
                 }}>
                   <div style={{ width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden", background: "var(--avatar-bg)" }}>
-                    <img src={avatarDisplayUrl} alt={profile.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    <img src={avatarDisplayUrl} alt="Profile photo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>
                 </div>
                 <div>
