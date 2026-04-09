@@ -150,6 +150,9 @@ export default async function HomePage() {
   const profileSocialLinks = ((profile as any)?.socialLinks || []) as Array<{ id?: string; platform: string; url: string }>;
   const academicCvUrl = profileSocialLinks.find((link) => link.platform === CV_PLATFORM.academic)?.url || "";
   const industryCvUrl = profileSocialLinks.find((link) => link.platform === CV_PLATFORM.industry)?.url || "";
+  const legacyResumeUrl = (profile as any)?.resumeUrl || "";
+  const academicDownloadUrl = academicCvUrl || legacyResumeUrl;
+  const industryDownloadUrl = industryCvUrl || legacyResumeUrl;
   const visibleSocialLinks = profileSocialLinks.filter(
     (link) => link.platform !== CV_PLATFORM.academic && link.platform !== CV_PLATFORM.industry
   );
@@ -273,22 +276,43 @@ export default async function HomePage() {
               Two versions are available: one for academic/research roles and one for industry/professional roles.
             </p>
 
-            {(academicCvUrl || industryCvUrl) ? (
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                {academicCvUrl && (
-                  <a href={academicCvUrl} download className="btn-glow" style={{ fontSize: 14 }}>
-                    Download Academic CV
-                  </a>
-                )}
-                {industryCvUrl && (
-                  <a href={industryCvUrl} download className="btn-outline" style={{ fontSize: 14 }}>
-                    Download Industry CV
-                  </a>
-                )}
-              </div>
-            ) : (
-              <p style={{ color: "var(--text-muted)", fontSize: 14 }}>
-                CV files will appear here after upload from the admin panel.
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              {academicDownloadUrl ? (
+                <a href={academicDownloadUrl} download="Academic_CV" className="btn-glow" style={{ fontSize: 14 }}>
+                  Download Academic CV
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  className="btn-glow"
+                  style={{ fontSize: 14, opacity: 0.55, cursor: "not-allowed" }}
+                  title="Academic CV not uploaded yet"
+                >
+                  Download Academic CV
+                </button>
+              )}
+
+              {industryDownloadUrl ? (
+                <a href={industryDownloadUrl} download="Industry_CV" className="btn-outline" style={{ fontSize: 14 }}>
+                  Download Industry CV
+                </a>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  className="btn-outline"
+                  style={{ fontSize: 14, opacity: 0.55, cursor: "not-allowed" }}
+                  title="Industry CV not uploaded yet"
+                >
+                  Download Industry CV
+                </button>
+              )}
+            </div>
+
+            {!academicDownloadUrl && !industryDownloadUrl && (
+              <p style={{ color: "var(--text-muted)", fontSize: 14, marginTop: 14 }}>
+                Upload the files from Admin Panel to enable both download buttons.
               </p>
             )}
           </div>
