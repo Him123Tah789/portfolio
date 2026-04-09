@@ -129,6 +129,11 @@ function formatDateGB(value: unknown): string {
   return parsed ? parsed.toLocaleDateString("en-GB") : "";
 }
 
+const CV_PLATFORM = {
+  academic: "CV_ACADEMIC",
+  industry: "CV_INDUSTRY",
+} as const;
+
 export default async function HomePage() {
   const profile = await getProfile();
   const projects = await getProjects();
@@ -142,6 +147,12 @@ export default async function HomePage() {
   const posts = await getPosts();
   const primaryPosts = posts.slice(0, 3);
   const secondaryPosts = posts.slice(3, 8);
+  const profileSocialLinks = ((profile as any)?.socialLinks || []) as Array<{ id?: string; platform: string; url: string }>;
+  const academicCvUrl = profileSocialLinks.find((link) => link.platform === CV_PLATFORM.academic)?.url || "";
+  const industryCvUrl = profileSocialLinks.find((link) => link.platform === CV_PLATFORM.industry)?.url || "";
+  const visibleSocialLinks = profileSocialLinks.filter(
+    (link) => link.platform !== CV_PLATFORM.academic && link.platform !== CV_PLATFORM.industry
+  );
 
   // Group skills by category
   const skillsByCategory = skills.reduce((acc: any, skill: any) => {
@@ -254,7 +265,7 @@ export default async function HomePage() {
               {profile?.bio ?? "I'm a full stack developer with experience building production-ready applications. I love clean code, great design, and solving hard problems."}
             </p>
             <div style={{ display: "flex", gap: 12, marginTop: 32, flexWrap: "wrap" }}>
-              {profile?.socialLinks?.map((link: any) => (
+              {visibleSocialLinks.map((link: any) => (
                 <a key={link.id} href={link.url} className="btn-outline" target="_blank" rel="noreferrer" style={{ fontSize: 14 }}>{link.platform}</a>
               ))}
             </div>
@@ -292,6 +303,33 @@ export default async function HomePage() {
               <p style={{ color: "var(--text-muted)", fontSize: 13, marginBottom: 4 }}>Email</p>
               <p style={{ fontWeight: 600 }}>{profile?.email ?? "hello@example.com"}</p>
             </div>
+            {(academicCvUrl || industryCvUrl) && (
+              <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: 10 }}>
+                <p style={{ color: "var(--text-muted)", fontSize: 13, marginBottom: 2 }}>Download CV</p>
+                <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                  {academicCvUrl && (
+                    <a
+                      href={academicCvUrl}
+                      download
+                      className="btn-outline"
+                      style={{ fontSize: 13, padding: "8px 14px" }}
+                    >
+                      Academic CV
+                    </a>
+                  )}
+                  {industryCvUrl && (
+                    <a
+                      href={industryCvUrl}
+                      download
+                      className="btn-outline"
+                      style={{ fontSize: 13, padding: "8px 14px" }}
+                    >
+                      Industry CV
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

@@ -3,6 +3,11 @@ import prisma from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
+const CV_PLATFORM = {
+    academic: "CV_ACADEMIC",
+    industry: "CV_INDUSTRY",
+} as const;
+
 export async function GET() {
     try {
         const profile = await prisma.profile.findFirst({
@@ -30,6 +35,7 @@ export async function PUT(req: Request) {
 
         const {
             name, title, bio = "", aboutTitle, address, avatarUrl, resumeUrl, email,
+            academicCvUrl, industryCvUrl,
             socialLinks = [],
             educationTitle, educationSubtitle,
             experienceTitle, experienceSubtitle,
@@ -48,8 +54,31 @@ export async function PUT(req: Request) {
         // Helper to use provided value or fall back to system defaults if blank
         const clean = (val: string, fallback: string) => (val && val.trim() !== "") ? val : fallback;
 
+        const trimmedAcademicCvUrl = typeof academicCvUrl === "string" ? academicCvUrl.trim() : "";
+        const trimmedIndustryCvUrl = typeof industryCvUrl === "string" ? industryCvUrl.trim() : "";
+        const primaryResumeUrl =
+            (typeof resumeUrl === "string" && resumeUrl.trim()) ||
+            trimmedIndustryCvUrl ||
+            trimmedAcademicCvUrl ||
+            null;
+
+        const regularSocialLinks = Array.isArray(socialLinks)
+            ? socialLinks.filter((link: any) => {
+                if (!link || typeof link !== "object") return false;
+                if (!link.platform || !link.url) return false;
+                return link.platform !== CV_PLATFORM.academic && link.platform !== CV_PLATFORM.industry;
+            })
+            : [];
+
+        const cvLinks = [
+            trimmedAcademicCvUrl ? { platform: CV_PLATFORM.academic, url: trimmedAcademicCvUrl } : null,
+            trimmedIndustryCvUrl ? { platform: CV_PLATFORM.industry, url: trimmedIndustryCvUrl } : null,
+        ].filter(Boolean) as Array<{ platform: string; url: string }>;
+
+        const mergedSocialLinks = [...regularSocialLinks, ...cvLinks];
+
         const data: any = {
-            name, title, bio, aboutTitle, address, avatarUrl, resumeUrl, email,
+            name, title, bio, aboutTitle, address, avatarUrl, resumeUrl: primaryResumeUrl, email,
             educationTitle: clean(educationTitle, "Academic Background"),
             educationSubtitle: clean(educationSubtitle, "Education"),
             experienceTitle: clean(experienceTitle, "Professional Experience"),
@@ -78,7 +107,7 @@ export async function PUT(req: Request) {
                     ...data,
                     socialLinks: {
                         deleteMany: {},
-                        create: socialLinks.map((link: any, index: number) => ({
+                        create: mergedSocialLinks.map((link: any, index: number) => ({
                             platform: link.platform,
                             url: link.url,
                             order: index
@@ -93,9 +122,10 @@ export async function PUT(req: Request) {
                 data: {
                     ...data,
                     socialLinks: {
-                        create: socialLinks.map((link: any) => ({
+                        create: mergedSocialLinks.map((link: any, index: number) => ({
                             platform: link.platform,
-                            url: link.url
+                            url: link.url,
+                            order: index,
                         }))
                     }
                 },

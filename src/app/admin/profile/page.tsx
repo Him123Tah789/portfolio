@@ -5,6 +5,11 @@ import Cropper from "react-easy-crop";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { GripVertical } from "lucide-react";
 
+const CV_PLATFORM = {
+    academic: "CV_ACADEMIC",
+    industry: "CV_INDUSTRY",
+} as const;
+
 // ── helpers ─────────────────────────────────────────────────────────────────
 function DroppableFix({ children, ...props }: any) {
     const [enabled, setEnabled] = useState(false);
@@ -77,16 +82,21 @@ export default function ProfileAdmin() {
     const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
     const [showCropper, setShowCropper]          = useState(false);
     const [uploading, setUploading]              = useState(false);
-    const [uploadingResume, setUploadingResume]  = useState(false);
+    const [uploadingCvType, setUploadingCvType]  = useState<"academic" | "industry" | null>(null);
     const [dragOver, setDragOver]                = useState(false);
 
     useEffect(() => {
         fetch("/api/profile")
             .then((r) => r.json())
             .then((d) => {
-                setProfile(d);
+                const rawLinks = d?.socialLinks || [];
+                const academicCvUrl = rawLinks.find((l: any) => l.platform === CV_PLATFORM.academic)?.url || "";
+                const industryCvUrl = rawLinks.find((l: any) => l.platform === CV_PLATFORM.industry)?.url || "";
+                setProfile({ ...d, academicCvUrl, industryCvUrl });
                 // Ensure every link has an id for DND keys
-                const links = (d?.socialLinks || []).map((l: any, idx: number) => ({
+                const links = rawLinks
+                    .filter((l: any) => l.platform !== CV_PLATFORM.academic && l.platform !== CV_PLATFORM.industry)
+                    .map((l: any, idx: number) => ({
                     ...l,
                     id: l.id || `init-${idx}-${Date.now()}`
                 }));
@@ -159,13 +169,13 @@ export default function ProfileAdmin() {
         setSocialLinks([...socialLinks, { id: `new-${Date.now()}`, platform: "GitHub", url: "" }]);
     };
 
-    const handleResumeFile = async (file: File) => {
+    const handleResumeFile = async (file: File, cvType: "academic" | "industry") => {
         if (!file) return;
-        setUploadingResume(true);
+        setUploadingCvType(cvType);
         try {
             const formData = new FormData();
             formData.append("file", file);
-            formData.append("fileName", `${(profile?.name || "resume").replace(/\s+/g, "_")}_resume`);
+            formData.append("fileName", `${(profile?.name || "resume").replace(/\s+/g, "_")}_${cvType}_cv`);
 
             const res = await fetch("/api/upload", {
                 method: "POST",
@@ -178,12 +188,16 @@ export default function ProfileAdmin() {
             }
 
             const { url } = await res.json();
-            setProfile((p: any) => ({ ...p, resumeUrl: url }));
-            showToast("success", "Document uploaded successfully.");
+            setProfile((p: any) => ({
+                ...p,
+                [cvType === "academic" ? "academicCvUrl" : "industryCvUrl"]: url,
+                resumeUrl: cvType === "industry" ? url : (p?.resumeUrl || url),
+            }));
+            showToast("success", `${cvType === "academic" ? "Academic" : "Industry"} CV uploaded successfully.`);
         } catch {
             showToast("error", "Document upload error.");
         } finally {
-            setUploadingResume(false);
+            setUploadingCvType(null);
         }
     };
     const handleRemoveLink = (i: number) => setSocialLinks(socialLinks.filter((_, idx) => idx !== i));
@@ -208,7 +222,14 @@ export default function ProfileAdmin() {
         const res = await fetch("/api/profile", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...data, avatarUrl: profile?.avatarUrl, resumeUrl: profile?.resumeUrl, socialLinks }),
+            body: JSON.stringify({
+                ...data,
+                avatarUrl: profile?.avatarUrl,
+                resumeUrl: profile?.industryCvUrl || profile?.academicCvUrl || profile?.resumeUrl,
+                academicCvUrl: profile?.academicCvUrl || "",
+                industryCvUrl: profile?.industryCvUrl || "",
+                socialLinks,
+            }),
         });
         setSaving(false);
         if (res.ok) showToast("success", "Profile saved successfully!");
@@ -347,43 +368,86 @@ export default function ProfileAdmin() {
                         <Field label="Present Address" name="address" defaultValue={profile?.address ?? ""} />
                     </div>
                     <div style={{ marginBottom: 24 }}>
-                        <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>Resume / Document</label>
-                        <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
-                            <button
-                                type="button"
-                                onClick={() => document.getElementById("resume-input")?.click()}
-                                style={{
-                                    border: "1px solid var(--border)",
-                                    borderRadius: 10,
-                                    background: "var(--bg-section)",
-                                    color: "var(--text-primary)",
-                                    padding: "10px 14px",
-                                    cursor: "pointer",
-                                    fontSize: 13,
-                                    fontWeight: 600,
-                                }}
-                                disabled={uploadingResume}
-                            >
-                                {uploadingResume ? "Uploading..." : "Upload Document"}
-                            </button>
-                            {profile?.resumeUrl ? (
-                                <a href={profile.resumeUrl} target="_blank" rel="noreferrer" style={{ color: "var(--accent)", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>
-                                    View Uploaded File
-                                </a>
-                            ) : (
-                                <span style={{ color: "var(--text-muted)", fontSize: 13 }}>No file uploaded</span>
-                            )}
+                        <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--text-muted)", marginBottom: 8, textTransform: "uppercase", letterSpacing: "0.05em" }}>CV / Resume Files</label>
+
+                        <div style={{ display: "grid", gap: 12 }}>
+                            <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+                                <span style={{ minWidth: 120, fontSize: 13, color: "var(--text-primary)", fontWeight: 600 }}>Academic CV</span>
+                                <button
+                                    type="button"
+                                    onClick={() => document.getElementById("academic-cv-input")?.click()}
+                                    style={{
+                                        border: "1px solid var(--border)",
+                                        borderRadius: 10,
+                                        background: "var(--bg-section)",
+                                        color: "var(--text-primary)",
+                                        padding: "10px 14px",
+                                        cursor: "pointer",
+                                        fontSize: 13,
+                                        fontWeight: 600,
+                                    }}
+                                    disabled={uploadingCvType === "academic"}
+                                >
+                                    {uploadingCvType === "academic" ? "Uploading..." : "Upload Academic CV"}
+                                </button>
+                                {profile?.academicCvUrl ? (
+                                    <a href={profile.academicCvUrl} target="_blank" rel="noreferrer" style={{ color: "var(--accent)", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>
+                                        View Uploaded File
+                                    </a>
+                                ) : (
+                                    <span style={{ color: "var(--text-muted)", fontSize: 13 }}>No file uploaded</span>
+                                )}
+                            </div>
+
+                            <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+                                <span style={{ minWidth: 120, fontSize: 13, color: "var(--text-primary)", fontWeight: 600 }}>Industry CV</span>
+                                <button
+                                    type="button"
+                                    onClick={() => document.getElementById("industry-cv-input")?.click()}
+                                    style={{
+                                        border: "1px solid var(--border)",
+                                        borderRadius: 10,
+                                        background: "var(--bg-section)",
+                                        color: "var(--text-primary)",
+                                        padding: "10px 14px",
+                                        cursor: "pointer",
+                                        fontSize: 13,
+                                        fontWeight: 600,
+                                    }}
+                                    disabled={uploadingCvType === "industry"}
+                                >
+                                    {uploadingCvType === "industry" ? "Uploading..." : "Upload Industry CV"}
+                                </button>
+                                {profile?.industryCvUrl ? (
+                                    <a href={profile.industryCvUrl} target="_blank" rel="noreferrer" style={{ color: "var(--accent)", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>
+                                        View Uploaded File
+                                    </a>
+                                ) : (
+                                    <span style={{ color: "var(--text-muted)", fontSize: 13 }}>No file uploaded</span>
+                                )}
+                            </div>
                         </div>
+
                         <p style={{ marginTop: 8, fontSize: 12, color: "var(--text-muted)" }}>
-                            Supports PDF, DOC, DOCX, ZIP, TXT, images, and most file types (max 20MB).
+                            Visitors can download both Academic and Industry CVs from your portfolio. Supports PDF, DOC, DOCX, ZIP, TXT, images, and most file types (max 20MB).
                         </p>
+
                         <input
-                            id="resume-input"
+                            id="academic-cv-input"
                             type="file"
                             style={{ display: "none" }}
                             onChange={(e) => {
                                 const file = e.target.files?.[0];
-                                if (file) void handleResumeFile(file);
+                                if (file) void handleResumeFile(file, "academic");
+                            }}
+                        />
+                        <input
+                            id="industry-cv-input"
+                            type="file"
+                            style={{ display: "none" }}
+                            onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) void handleResumeFile(file, "industry");
                             }}
                         />
                     </div>
