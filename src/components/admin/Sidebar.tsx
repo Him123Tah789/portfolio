@@ -23,12 +23,16 @@ const navigation = [
 export function Sidebar() {
     const pathname = usePathname();
     const [profile, setProfile] = useState<any>(null);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         fetch("/api/profile")
             .then((r) => r.json())
             .then(setProfile)
-            .catch(() => {});
+            .catch((err) => {
+                console.error("Sidebar profile fetch error:", err);
+                setError(err.message);
+            });
     }, []);
 
     // Re-fetch whenever we navigate to pick up a fresh avatar
@@ -36,10 +40,17 @@ export function Sidebar() {
         fetch("/api/profile")
             .then((r) => r.json())
             .then(setProfile)
-            .catch(() => {});
+            .catch((err) => {
+                console.error("Sidebar profile fetch error on navigate:", err);
+                setError(err.message);
+            });
     }, [pathname]);
 
     const initials = (profile?.name ?? "M").charAt(0).toUpperCase();
+
+    if (error) {
+        console.warn("Sidebar rendering with error state:", error);
+    }
 
     return (
         <div className="hide-on-print" style={{
