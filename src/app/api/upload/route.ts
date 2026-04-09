@@ -36,7 +36,8 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
-        if (!process.env.BLOB_READ_WRITE_TOKEN) {
+        const blobToken = (process.env.BLOB_READ_WRITE_TOKEN || process.env.VERCEL_BLOB_READ_WRITE_TOKEN || "").trim();
+        if (!blobToken) {
             return NextResponse.json({ error: "Missing BLOB_READ_WRITE_TOKEN in environment" }, { status: 500 });
         }
 
@@ -65,6 +66,7 @@ export async function POST(req: Request) {
                 access: "public",
                 addRandomSuffix: true,
                 contentType: file.type || undefined,
+                token: blobToken,
             });
 
             const fileName = blob.pathname.split("/").pop() || blob.pathname;
@@ -99,6 +101,7 @@ export async function POST(req: Request) {
             access: "public",
             addRandomSuffix: true,
             contentType: mime,
+            token: blobToken,
         });
 
         const savedName = blob.pathname.split("/").pop() || blob.pathname;
