@@ -211,26 +211,19 @@ export default async function HomePage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        textAlign: "center",
+        textAlign: "left",
         padding: "0 5%",
         overflow: "hidden",
       }}>
-        <div className="animate-in" style={{ maxWidth: 760, position: "relative", zIndex: 2 }}>
-          {/* Avatar */}
-          {profile?.avatarUrl && (
-            <div style={{ display: "flex", justifyContent: "center", marginBottom: 32 }}>
-              <div style={{
-                width: 120, height: 120, borderRadius: "50%",
-                background: "linear-gradient(135deg, #6c63ff, #ff6584)",
-                padding: 3, boxShadow: "0 0 60px rgba(108,99,255,0.5)",
-              }}>
-                <div style={{ width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden", background: "var(--avatar-bg)" }}>
-                  <img src={profile.avatarUrl} alt={profile.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                </div>
-              </div>
-            </div>
-          )}
+        <div className="animate-in" style={{ width: "100%", maxWidth: 1200, position: "relative", zIndex: 2 }}>
           <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gap: 48,
+            alignItems: "center",
+          }}>
+            <div>
+              <div style={{
             display: "inline-block",
             padding: "6px 18px",
             borderRadius: 50,
@@ -247,19 +240,90 @@ export default async function HomePage() {
           <h1 style={{ fontSize: "clamp(3rem, 8vw, 6rem)", fontWeight: 900, lineHeight: 1.05, letterSpacing: "-0.04em", marginBottom: 24 }}>
             Hi, I'm <span className="gradient-text" style={{ whiteSpace: "nowrap", display: "inline-block" }}>{profile?.name ?? "Faishal Uddin Himel"}</span>
           </h1>
-          <p style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", color: "var(--text-muted)", lineHeight: 2.08, marginBottom: 56, maxWidth: "74ch", margin: "0 auto 56px" }}>
+          <p style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", color: "var(--text-muted)", lineHeight: 2.08, marginBottom: 44, maxWidth: "74ch" }}>
             {profile?.bio ?? "Full Stack Developer crafting clean, scalable, and beautiful web applications with a passion for great user experience."}
           </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 16, justifyContent: "flex-start", flexWrap: "wrap" }}>
             <Link href="/projects" className="btn-glow">Projects</Link>
             <Link href="/research" className="btn-outline">Research</Link>
             <a href="#projects" className="btn-glow">View My Work</a>
             <a href="#contact" className="btn-outline">Get in Touch</a>
-            {(academicCvUrl || industryCvUrl) && (
-              <a href="#about" className="btn-outline" title="CV download options are in About section">
-                Download CV (About)
-              </a>
-            )}
+          </div>
+            </div>
+
+            <div className="glass" style={{
+              border: "1px solid var(--border)",
+              padding: 28,
+              borderRadius: 24,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+              gap: 16,
+            }}>
+              <div style={{
+                width: 240,
+                height: 240,
+                borderRadius: "50%",
+                background: "linear-gradient(135deg, #6c63ff, #ff6584)",
+                padding: 4,
+                boxShadow: "0 0 60px rgba(108,99,255,0.35)",
+              }}>
+                <div style={{ width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden", background: "var(--avatar-bg)" }}>
+                  {profile?.avatarUrl ? (
+                    <img src={profile.avatarUrl} alt={profile?.name || "Profile"} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  ) : (
+                    <div style={{
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "var(--text-primary)",
+                      fontSize: 72,
+                      fontWeight: 900,
+                    }}>
+                      {(profile?.name?.[0] || "P").toUpperCase()}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <p style={{ color: "var(--text-muted)", fontSize: 13, margin: 0 }}>Download CV</p>
+              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
+                {academicDownloadUrl ? (
+                  <a href={academicDownloadUrl} download="Academic_CV" className="btn-glow" style={{ fontSize: 13 }}>
+                    Academic CV
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    disabled
+                    className="btn-glow"
+                    style={{ fontSize: 13, opacity: 0.55, cursor: "not-allowed" }}
+                    title="Academic CV not uploaded yet"
+                  >
+                    Academic CV
+                  </button>
+                )}
+
+                {industryDownloadUrl ? (
+                  <a href={industryDownloadUrl} download="Industry_CV" className="btn-outline" style={{ fontSize: 13 }}>
+                    Industry CV
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    disabled
+                    className="btn-outline"
+                    style={{ fontSize: 13, opacity: 0.55, cursor: "not-allowed" }}
+                    title="Industry CV not uploaded yet"
+                  >
+                    Industry CV
+                  </button>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </section>
