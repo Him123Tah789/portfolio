@@ -156,10 +156,11 @@ export default function ProfileAdmin() {
                 setShowCropper(false);
                 showToast("success", "Profile photo updated!");
             } else {
-                showToast("error", "Upload failed. Please try again.");
+                const data = await res.json().catch(() => ({}));
+                showToast("error", data?.error || "Upload failed. Please try again.");
             }
-        } catch {
-            showToast("error", "Upload error. Please try again.");
+        } catch (error: any) {
+            showToast("error", error?.message || "Upload error. Please try again.");
         }
         setUploading(false);
     };
@@ -183,7 +184,8 @@ export default function ProfileAdmin() {
             });
 
             if (!res.ok) {
-                showToast("error", "Document upload failed.");
+                const data = await res.json().catch(() => ({}));
+                showToast("error", data?.error || "Document upload failed.");
                 return;
             }
 
@@ -194,8 +196,8 @@ export default function ProfileAdmin() {
                 resumeUrl: cvType === "industry" ? url : (p?.resumeUrl || url),
             }));
             showToast("success", `${cvType === "academic" ? "Academic" : "Industry"} CV uploaded successfully.`);
-        } catch {
-            showToast("error", "Document upload error.");
+        } catch (error: any) {
+            showToast("error", error?.message || "Document upload error.");
         } finally {
             setUploadingCvType(null);
         }

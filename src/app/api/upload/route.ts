@@ -4,6 +4,8 @@ import { authOptions } from "@/lib/auth";
 import { put } from "@vercel/blob";
 import { extname } from "path";
 
+export const runtime = "nodejs";
+
 function sanitizeFileName(input: string) {
     return input
         .replace(/[^a-zA-Z0-9._-]/g, "_")
@@ -32,6 +34,10 @@ export async function POST(req: Request) {
         const session = await getServerSession(authOptions);
         if (!session || (session.user as any).role !== "ADMIN") {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        if (!process.env.BLOB_READ_WRITE_TOKEN) {
+            return NextResponse.json({ error: "Missing BLOB_READ_WRITE_TOKEN in environment" }, { status: 500 });
         }
 
         const contentType = req.headers.get("content-type") || "";
@@ -104,6 +110,6 @@ export async function POST(req: Request) {
         if (message.includes("BLOB_READ_WRITE_TOKEN")) {
             return NextResponse.json({ error: "Blob storage is not configured" }, { status: 500 });
         }
-        return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+        return NextResponse.json({ error: message || "Upload failed" }, { status: 500 });
     }
 }
