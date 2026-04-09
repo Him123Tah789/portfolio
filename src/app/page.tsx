@@ -251,6 +251,11 @@ export default async function HomePage() {
             <Link href="/research" className="btn-outline">Research</Link>
             <a href="#projects" className="btn-glow">View My Work</a>
             <a href="#contact" className="btn-outline">Get in Touch</a>
+            {(academicCvUrl || industryCvUrl) && (
+              <a href="#about" className="btn-outline" title="CV download options are in About section">
+                Download CV (About)
+              </a>
+            )}
           </div>
         </div>
       </section>
