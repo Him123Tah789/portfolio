@@ -9,6 +9,9 @@
     "lint": "eslint",
     "postinstall": "prisma generate && patch-package"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
     "@prisma/config": "^7.4.2",
@@ -44,6 +47,8 @@
     "patch-package": "^8.0.1",
     "prisma": "^5.22.0",
     "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5"
   }
 }

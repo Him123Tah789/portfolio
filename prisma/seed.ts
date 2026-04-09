@@ -1,8 +1,12 @@
-import { PrismaClient } from '../src/generated/client'
-import { hash } from 'bcryptjs'
-import { config } from 'dotenv'
+const { hash } = require('bcryptjs')
+const { config } = require('dotenv')
+const path = require('path')
 
-config({ path: '.env.local' })
+config({ path: path.join(__dirname, '../.env.local') })
+
+// Import Prisma using the same method as the app
+const prismaModule = require('../src/generated/client')
+const { PrismaClient } = prismaModule
 
 const prisma = new PrismaClient()
 
