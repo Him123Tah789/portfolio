@@ -244,30 +244,30 @@ export default async function HomePage() {
           <h1 style={{ fontSize: "clamp(2.6rem, 7vw, 5.6rem)", fontWeight: 900, lineHeight: 1.04, letterSpacing: "-0.04em", marginBottom: 24, maxWidth: "14ch", textWrap: "balance" as any, overflowWrap: "anywhere" }}>
             Hi, I'm <span className="gradient-text" style={{ display: "inline" }}>{profile?.name ?? "Faishal Uddin Himel"}</span>
           </h1>
-          <p style={{ fontSize: "clamp(1rem, 2.1vw, 1.32rem)", color: "var(--text-muted)", lineHeight: 1.72, marginBottom: 40, maxWidth: "58ch", textWrap: "pretty" as any }}>
+          <p style={{ fontSize: "clamp(1.12rem, 2.4vw, 1.48rem)", color: "var(--text-muted)", lineHeight: 1.84, marginBottom: 40, maxWidth: "68ch", textWrap: "pretty" as any }}>
             {profile?.bio ?? "Full Stack Developer crafting clean, scalable, and beautiful web applications with a passion for great user experience."}
           </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "flex-start", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", gap: 16, justifyContent: "flex-start", flexWrap: "wrap", alignItems: "center", width: "100%", maxWidth: 760 }}>
             <Link href="/projects" className="btn-glow">Projects</Link>
             <Link href="/research" className="btn-outline">Research</Link>
             <a href="#projects" className="btn-glow">View My Work</a>
-            <a href="#contact" className="btn-outline">Get in Touch</a>
+            <a href="#contact" className="btn-outline" style={{ marginLeft: "auto" }}>Get in Touch</a>
           </div>
             </div>
 
             <div className="glass" style={{
               border: "1px solid var(--border)",
-              padding: 28,
+              padding: 36,
               borderRadius: 24,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               textAlign: "center",
-              gap: 16,
+              gap: 18,
             }}>
               <div style={{
-                width: 240,
-                height: 240,
+                width: 300,
+                height: 300,
                 borderRadius: "50%",
                 background: "linear-gradient(135deg, #6c63ff, #ff6584)",
                 padding: 4,
