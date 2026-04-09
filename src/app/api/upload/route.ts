@@ -6,6 +6,8 @@ import { extname } from "path";
 
 export const runtime = "nodejs";
 
+const blobAccess = process.env.BLOB_ACCESS === "public" ? "public" : "private";
+
 function sanitizeFileName(input: string) {
     return input
         .replace(/[^a-zA-Z0-9._-]/g, "_")
@@ -63,6 +65,7 @@ export async function POST(req: Request) {
             const uploadPath = `uploads/${baseName}${ext}`;
 
             const blob = await put(uploadPath, file, {
+                access: blobAccess,
                 addRandomSuffix: true,
                 contentType: file.type || undefined,
                 token: blobToken,
@@ -97,6 +100,7 @@ export async function POST(req: Request) {
         const uploadPath = `uploads/${normalizedName}`;
 
         const blob = await put(uploadPath, new Blob([buffer], { type: mime }), {
+            access: blobAccess,
             addRandomSuffix: true,
             contentType: mime,
             token: blobToken,
