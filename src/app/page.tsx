@@ -182,6 +182,7 @@ export default async function HomePage() {
 
         <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
           <a href="#about" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>About</a>
+          <a href="#cv" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>CV</a>
           <a href="#education" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Education</a>
           <a href="#experience" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Experience</a>
           <a href="#skills" style={{ color: "var(--text-muted)", textDecoration: "none", fontSize: 14, fontWeight: 500 }}>Skills</a>
@@ -255,6 +256,40 @@ export default async function HomePage() {
               <a href="#about" className="btn-outline" title="CV download options are in About section">
                 Download CV (About)
               </a>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CV DOWNLOAD ── */}
+      <section id="cv" style={{ padding: "72px 5% 24px" }}>
+        <div className="reveal" style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div className="glass" style={{ padding: 32, border: "1px solid var(--border)" }}>
+            <p style={{ color: "var(--accent)", fontSize: 13, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: 10 }}>
+              Download CV
+            </p>
+            <h2 className="section-title" style={{ marginBottom: 12 }}>Choose the CV that matches your needs</h2>
+            <p style={{ color: "var(--text-muted)", marginBottom: 20 }}>
+              Two versions are available: one for academic/research roles and one for industry/professional roles.
+            </p>
+
+            {(academicCvUrl || industryCvUrl) ? (
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                {academicCvUrl && (
+                  <a href={academicCvUrl} download className="btn-glow" style={{ fontSize: 14 }}>
+                    Download Academic CV
+                  </a>
+                )}
+                {industryCvUrl && (
+                  <a href={industryCvUrl} download className="btn-outline" style={{ fontSize: 14 }}>
+                    Download Industry CV
+                  </a>
+                )}
+              </div>
+            ) : (
+              <p style={{ color: "var(--text-muted)", fontSize: 14 }}>
+                CV files will appear here after upload from the admin panel.
+              </p>
             )}
           </div>
         </div>
