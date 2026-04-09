@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Cropper from "react-easy-crop";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { GripVertical } from "lucide-react";
+import { toBlobProxyUrl } from "@/lib/blobProxy";
 
 const CV_PLATFORM = {
     academic: "CV_ACADEMIC",
@@ -84,6 +85,9 @@ export default function ProfileAdmin() {
     const [uploading, setUploading]              = useState(false);
     const [uploadingCvType, setUploadingCvType]  = useState<"academic" | "industry" | null>(null);
     const [dragOver, setDragOver]                = useState(false);
+    const avatarPreviewUrl = toBlobProxyUrl(profile?.avatarUrl || "");
+    const academicCvPreviewUrl = toBlobProxyUrl(profile?.academicCvUrl || "");
+    const industryCvPreviewUrl = toBlobProxyUrl(profile?.industryCvUrl || "");
 
     useEffect(() => {
         fetch("/api/profile")
@@ -294,8 +298,8 @@ export default function ProfileAdmin() {
                                 boxShadow: "0 0 40px rgba(108,99,255,0.4)",
                             }}>
                                 <div style={{ width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden", background: "#0a0a0f" }}>
-                                    {profile?.avatarUrl ? (
-                                        <img src={profile.avatarUrl} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                    {avatarPreviewUrl ? (
+                                        <img src={avatarPreviewUrl} alt="Avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                                     ) : (
                                         <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 48, fontWeight: 900, color: "var(--text-primary)" }}>
                                             {(profile?.name?.[0] || "M").toUpperCase()}
@@ -392,8 +396,8 @@ export default function ProfileAdmin() {
                                 >
                                     {uploadingCvType === "academic" ? "Uploading..." : "Upload Academic CV"}
                                 </button>
-                                {profile?.academicCvUrl ? (
-                                    <a href={profile.academicCvUrl} target="_blank" rel="noreferrer" style={{ color: "var(--accent)", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>
+                                {academicCvPreviewUrl ? (
+                                    <a href={academicCvPreviewUrl} target="_blank" rel="noreferrer" style={{ color: "var(--accent)", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>
                                         View Uploaded File
                                     </a>
                                 ) : (
@@ -420,8 +424,8 @@ export default function ProfileAdmin() {
                                 >
                                     {uploadingCvType === "industry" ? "Uploading..." : "Upload Industry CV"}
                                 </button>
-                                {profile?.industryCvUrl ? (
-                                    <a href={profile.industryCvUrl} target="_blank" rel="noreferrer" style={{ color: "var(--accent)", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>
+                                {industryCvPreviewUrl ? (
+                                    <a href={industryCvPreviewUrl} target="_blank" rel="noreferrer" style={{ color: "var(--accent)", fontSize: 13, textDecoration: "none", fontWeight: 600 }}>
                                         View Uploaded File
                                     </a>
                                 ) : (

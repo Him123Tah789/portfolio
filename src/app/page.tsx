@@ -5,6 +5,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import ProjectCarousel from "@/components/ProjectCarousel";
 import SkillsTicker from "@/components/SkillsTicker";
 import HomeSwipeNavigator from "@/components/HomeSwipeNavigator";
+import { toBlobProxyUrl } from "@/lib/blobProxy";
 
 export const dynamic = "force-dynamic";
 
@@ -151,8 +152,11 @@ export default async function HomePage() {
   const academicCvUrl = profileSocialLinks.find((link) => link.platform === CV_PLATFORM.academic)?.url || "";
   const industryCvUrl = profileSocialLinks.find((link) => link.platform === CV_PLATFORM.industry)?.url || "";
   const legacyResumeUrl = (profile as any)?.resumeUrl || "";
-  const academicDownloadUrl = academicCvUrl || legacyResumeUrl;
-  const industryDownloadUrl = industryCvUrl || legacyResumeUrl;
+  const avatarDisplayUrl = toBlobProxyUrl((profile as any)?.avatarUrl || "");
+  const academicDownloadUrl = toBlobProxyUrl(academicCvUrl || legacyResumeUrl, { download: true });
+  const industryDownloadUrl = toBlobProxyUrl(industryCvUrl || legacyResumeUrl, { download: true });
+  const academicCardUrl = toBlobProxyUrl(academicCvUrl, { download: true });
+  const industryCardUrl = toBlobProxyUrl(industryCvUrl, { download: true });
   const visibleSocialLinks = profileSocialLinks.filter(
     (link) => link.platform !== CV_PLATFORM.academic && link.platform !== CV_PLATFORM.industry
   );
@@ -270,8 +274,8 @@ export default async function HomePage() {
                 boxShadow: "0 0 60px rgba(108,99,255,0.35)",
               }}>
                 <div style={{ width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden", background: "var(--avatar-bg)" }}>
-                  {profile?.avatarUrl ? (
-                    <img src={profile.avatarUrl} alt={profile?.name || "Profile"} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  {avatarDisplayUrl ? (
+                    <img src={avatarDisplayUrl} alt={profile?.name || "Profile"} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   ) : (
                     <div style={{
                       width: "100%",
@@ -400,7 +404,7 @@ export default async function HomePage() {
           </div>
           <div className="glass hover-card" style={{ padding: 40 }}>
             {/* Avatar in about card */}
-            {profile?.avatarUrl && (
+            {avatarDisplayUrl && (
               <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 32, paddingBottom: 28, borderBottom: "1px solid var(--border)" }}>
                 <div style={{
                   width: 72, height: 72, borderRadius: "50%", flexShrink: 0,
@@ -408,7 +412,7 @@ export default async function HomePage() {
                   boxShadow: "0 0 24px rgba(108,99,255,0.4)",
                 }}>
                   <div style={{ width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden", background: "var(--avatar-bg)" }}>
-                    <img src={profile.avatarUrl} alt={profile.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    <img src={avatarDisplayUrl} alt={profile.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>
                 </div>
                 <div>
@@ -435,9 +439,9 @@ export default async function HomePage() {
               <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid var(--border)", display: "flex", flexDirection: "column", gap: 10 }}>
                 <p style={{ color: "var(--text-muted)", fontSize: 13, marginBottom: 2 }}>Download CV</p>
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                  {academicCvUrl && (
+                  {academicCardUrl && (
                     <a
-                      href={academicCvUrl}
+                      href={academicCardUrl}
                       download
                       className="btn-outline"
                       style={{ fontSize: 13, padding: "8px 14px" }}
@@ -445,9 +449,9 @@ export default async function HomePage() {
                       Academic CV
                     </a>
                   )}
-                  {industryCvUrl && (
+                  {industryCardUrl && (
                     <a
-                      href={industryCvUrl}
+                      href={industryCardUrl}
                       download
                       className="btn-outline"
                       style={{ fontSize: 13, padding: "8px 14px" }}

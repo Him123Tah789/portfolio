@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
+import { toBlobProxyUrl } from "@/lib/blobProxy";
 
 const navigation = [
     { name: "Dashboard",       href: "/admin",              icon: "⚡" },
@@ -47,6 +48,7 @@ export function Sidebar() {
     }, [pathname]);
 
     const initials = (profile?.name ?? "M").charAt(0).toUpperCase();
+    const avatarUrl = toBlobProxyUrl(profile?.avatarUrl || "");
 
     if (error) {
         console.warn("Sidebar rendering with error state:", error);
@@ -85,8 +87,8 @@ export function Sidebar() {
                         boxShadow: "0 0 20px rgba(108,99,255,0.4)",
                     }}>
                         <div style={{ width: "100%", height: "100%", borderRadius: "50%", overflow: "hidden", background: "var(--avatar-bg)" }}>
-                            {profile?.avatarUrl ? (
-                                <img src={profile.avatarUrl} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                            {avatarUrl ? (
+                                <img src={avatarUrl} alt="avatar" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                             ) : (
                                 <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 20, color: "var(--text-primary)" }}>
                                     {initials}
