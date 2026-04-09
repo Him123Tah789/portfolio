@@ -250,8 +250,8 @@ export default async function HomePage() {
           <div style={{ display: "flex", gap: 16, justifyContent: "flex-start", flexWrap: "wrap", alignItems: "center", width: "100%", maxWidth: 760 }}>
             <Link href="/projects" className="btn-glow">Projects</Link>
             <Link href="/research" className="btn-outline">Research</Link>
+            <a href="#contact" className="btn-outline">Get in Touch</a>
             <a href="#projects" className="btn-glow">View My Work</a>
-            <a href="#contact" className="btn-outline" style={{ marginLeft: "auto" }}>Get in Touch</a>
           </div>
             </div>
 
