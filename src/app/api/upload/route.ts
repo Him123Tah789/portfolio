@@ -63,7 +63,6 @@ export async function POST(req: Request) {
             const uploadPath = `uploads/${baseName}${ext}`;
 
             const blob = await put(uploadPath, file, {
-                access: "public",
                 addRandomSuffix: true,
                 contentType: file.type || undefined,
                 token: blobToken,
@@ -72,7 +71,7 @@ export async function POST(req: Request) {
             const fileName = blob.pathname.split("/").pop() || blob.pathname;
 
             return NextResponse.json({
-                url: blob.url,
+                url: (blob as any).downloadUrl || blob.url,
                 fileName,
                 originalName: file.name,
                 size: file.size,
@@ -98,7 +97,6 @@ export async function POST(req: Request) {
         const uploadPath = `uploads/${normalizedName}`;
 
         const blob = await put(uploadPath, new Blob([buffer], { type: mime }), {
-            access: "public",
             addRandomSuffix: true,
             contentType: mime,
             token: blobToken,
@@ -106,7 +104,7 @@ export async function POST(req: Request) {
 
         const savedName = blob.pathname.split("/").pop() || blob.pathname;
 
-        return NextResponse.json({ url: blob.url, fileName: savedName });
+        return NextResponse.json({ url: (blob as any).downloadUrl || blob.url, fileName: savedName });
     } catch (error) {
         console.error("Upload error:", error);
         const message = error instanceof Error ? error.message : "Upload failed";
